@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ResetDrivePosition;
 import frc.robot.commands.resetOdometry;
 import frc.robot.commands.auto.LPathTrajectory;
 import frc.robot.commands.auto.Calibration.StraightLineTest10Ft;
@@ -22,9 +21,7 @@ import frc.robot.commands.auto.Calibration.StraightLineTest10Ft1;
 import frc.robot.commands.auto.autonav.BarrelRacing;
 import frc.robot.commands.auto.autonav.Bounce;
 import frc.robot.commands.auto.autonav.Slalom;
-import frc.robot.commands.swerve.SetTurnMotorTicks;
 import frc.robot.commands.swerve.SwerveDriveCommand;
-import frc.robot.nerdyfiles.swerve.FXSwerveModule;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.SwerveDrivetrain;
 
@@ -110,7 +107,6 @@ public class RobotContainer {
     redB.whenPressed(new resetOdometry(swerveDrivetrain));
 
     SmartDashboard.putData("AutonChooser", autonChooser);
-    SmartDashboard.putData("Reset Drive Encoders", new ResetDrivePosition(swerveDrivetrain));
   }
 
   /**
