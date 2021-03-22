@@ -92,6 +92,14 @@ public class SwerveDrivetrain extends SubsystemBase {
     return odometry.getPoseMeters();
   }
 
+  public double getDriveMotorPosition(int module) {
+    return modules[module].getDriveMotorPosition();
+  }
+
+  public double getTicksInches(double inches) {
+        return modules[0].getTicksFromInches(inches);
+}
+
   public SwerveDriveKinematics getKinematics() {
     return kinematics;
   }
@@ -231,7 +239,9 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
   }
 
+  private double sentDegree;
   public void setAngleMotorsTeleop(double degrees) {
+    sentDegree = degrees;
     for (int i = 0; i < 2; i++) {
       FXSwerveModule module = modules[i];
       module.setAngle(Rotation2d.fromDegrees(degrees));    
@@ -251,6 +261,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Velocity X", Units.metersToFeet(speeds.vxMetersPerSecond));
     SmartDashboard.putNumber("Velocity Y", Units.metersToFeet(speeds.vyMetersPerSecond));
     SmartDashboard.putNumber("PoseYaw", getPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("input angle", sentDegree);
 
     for(FXSwerveModule module : modules) {
       module.logDebug();

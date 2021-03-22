@@ -40,8 +40,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
 
-    String mac = "xx:xx:xx:xx:xx:xx";
+//    String mac = "xx:xx:xx:xx:xx:xx";
     // Attempt to get the MAC address of the robot
+    /*
     try {
       // Gets the raw data for the MAC address
       NetworkInterface network = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
       System.out.println("CompBot " + mac);
       isComp = true;
     }
+    */
   }
 
   /**

@@ -88,6 +88,7 @@ public class FXSwerveModule {
     private static final double kWheelInchesPerRotation = 2 * Math.PI * (kWheelDiameterInches / 2);
     private static final double kWheelTicksPerRevolution = kDriveEncoderTicksPerRotation * kDriveGearRatio;
     private static final double kInchesPerTick = kWheelInchesPerRotation / kWheelTicksPerRevolution;
+    private static final double kTicksPerInch = kWheelTicksPerRevolution / kWheelInchesPerRotation;
     private static final double kDriveFeetPerTick = kInchesPerTick / 12;
 
     /**
@@ -241,6 +242,15 @@ public class FXSwerveModule {
         double velocityFeet = velocityInches / 12;
         // 100ms -> 1s (10 100ms intervals per second)
         return velocityFeet * 10;
+    }
+    /**
+     * Get the number of drive ticks based on the measurement provided in inches
+     * @param inches
+     * @return Number of ticks the encoder will travel based on the number of inches the wheel travels.
+     */
+    public double getTicksFromInches(double inches) {
+        double ticks = kTicksPerInch * inches;
+        return ticks;
     }
 
     /**
