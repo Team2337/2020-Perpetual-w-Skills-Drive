@@ -21,6 +21,7 @@ import frc.robot.commands.auto.MotionMagicCommand;
 import frc.robot.commands.auto.calibration.StraightLineTest10Ft;
 import frc.robot.commands.auto.calibration.StraightLineTest10Ft0;
 import frc.robot.commands.auto.calibration.StraightLineTest10Ft1;
+import frc.robot.commands.auto.commandGroups.CircleTest;
 import frc.robot.commands.auto.galacticsearch.GalacticSearchBlueA;
 import frc.robot.commands.auto.galacticsearch.GalacticSearchBlueB;
 import frc.robot.commands.auto.galacticsearch.GalacticSearchRedA;
@@ -79,6 +80,7 @@ public class RobotContainer {
 
 
     autonChooser.addOption("LPathCommand", new LPathTrajectory(swerveDrivetrain));
+    autonChooser.addOption("CircleTest", new CircleTest(swerveDrivetrain));
     autonChooser.addOption("Motion Magic (10ft)", new MotionMagicCommand(new Translation2d(10, 5), swerveDrivetrain));
     autonChooser.addOption("Motion Magic (L-10ft)", new SequentialCommandGroup(
       new MotionMagicCommand(new Translation2d(5, 2.5), swerveDrivetrain),

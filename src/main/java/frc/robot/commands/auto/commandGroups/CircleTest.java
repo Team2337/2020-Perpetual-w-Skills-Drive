@@ -5,13 +5,14 @@ import frc.robot.commands.auto.DriveWithJoystickInputs;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 public class CircleTest extends SequentialCommandGroup {
-    SwerveDrivetrain drivetrain;
 
-    public CircleTest() {
+
+    public CircleTest(SwerveDrivetrain drivetrain) {
         addCommands(
-        new DriveWithJoystickInputs(drivetrain, .4, 75.0, 0),
-        new DriveWithJoystickInputs(drivetrain, .4, 75.0, 22)
-
+        new DriveWithJoystickInputs(drivetrain, .4, 60.0, 0),
+        new DriveWithJoystickInputs(drivetrain, .4, 108.0, 22),
+        new DriveWithJoystickInputs(drivetrain, .2, 132, 0),
+        new DriveWithJoystickInputs(drivetrain, 0, 132, 0)
         );
     }
     
