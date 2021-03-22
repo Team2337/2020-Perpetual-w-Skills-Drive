@@ -231,6 +231,18 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
   }
 
+  public void setAngleMotorsTeleop(double degrees) {
+    for (int i = 0; i < 2; i++) {
+      FXSwerveModule module = modules[i];
+      module.setAngle(Rotation2d.fromDegrees(degrees));    
+    }
+    for (int i = 2; i < 4; i++) {
+      FXSwerveModule module = modules[i];
+      module.setAngle(Rotation2d.fromDegrees(-degrees));    
+    }
+
+  }
+
   @Override
   public void periodic() {
     odometry.update(Rotation2d.fromDegrees(pigeon.getYaw()), modules[0].getState(), modules[1].getState(), modules[2].getState(), modules[3].getState());

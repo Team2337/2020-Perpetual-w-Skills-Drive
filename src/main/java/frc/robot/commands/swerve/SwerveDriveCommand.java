@@ -1,8 +1,10 @@
 package frc.robot.commands.swerve;
 
+import frc.robot.RobotContainer;
 import frc.robot.Utilities;
 import frc.robot.subsystems.SwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -50,6 +52,12 @@ public class SwerveDriveCommand extends CommandBase {
     forward = Utilities.deadband(forward, 0.1);
     strafe = Utilities.deadband(strafe, 0.1);
     rotation = Utilities.deadband(rotation, 0.1);
+
+    if ((controller.getXButton()) || (controller.getYButton())) {
+      strafe = 0;
+      rotation = 0;
+      isFieldOriented = false;
+    }
 
     // Pass on joystick values to be calculated into angles and speeds
     drivetrain.calculateJoystickInput(forward, strafe, rotation, isFieldOriented);

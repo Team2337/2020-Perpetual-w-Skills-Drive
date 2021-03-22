@@ -113,16 +113,23 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  final JoystickButton blueX = new JoystickButton(controller, XboxController.Button.kX.value);
+
   private void configureButtonBindings() {
     // Driver Left Bumper is used for field-oriented drive - held for true, released
     // for false
 
     final JoystickButton greenA = new JoystickButton(controller, XboxController.Button.kA.value);
     final JoystickButton redB = new JoystickButton(controller, XboxController.Button.kB.value);
+  //  final JoystickButton blueX = new JoystickButton(controller, XboxController.Button.kX.value);
+    final JoystickButton yellowY = new JoystickButton(controller, XboxController.Button.kY.value);
 
     greenA.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
     // greenA.whenPressed(new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));
     redB.whenPressed(() -> swerveDrivetrain.resetOdometry());
+
+    blueX.whileHeld(() -> swerveDrivetrain.setAngleMotorsTeleop(22));
+    yellowY.whileHeld(() -> swerveDrivetrain.setAngleMotorsTeleop(-22));
 
     SmartDashboard.putData("AutonChooser", autonChooser);
     // SmartDashboard.putData("Reset Drive Encoder", new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));

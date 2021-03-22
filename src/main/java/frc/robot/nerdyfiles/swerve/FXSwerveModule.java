@@ -272,7 +272,8 @@ public class FXSwerveModule {
         driveMotor.set(TalonFXControlMode.MotionMagic, distanceFeet / kDriveFeetPerTick);
     }
 
-    private void setAngle(Rotation2d angle) {
+
+    public void setAngle(Rotation2d angle) {
         Rotation2d currentRotation = Rotation2d.fromDegrees(getAngle());
 
         // Find the rotational difference between the current state and the desired state
