@@ -24,7 +24,7 @@ import frc.robot.subsystems.PixyCam2Wire;
 public class Robot extends TimedRobot {
 
   public static boolean isComp = false;
-
+  public static Utilities Utilities;
   public boolean Logger;
 
   private Command autonomousCommand;
@@ -42,6 +42,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    Utilities = new Utilities();
+
+
+
     this.pixyCam = robotContainer.pixy;
     if(pixyCam.pixySeesTarget()) {
       pixyCam.printPath();

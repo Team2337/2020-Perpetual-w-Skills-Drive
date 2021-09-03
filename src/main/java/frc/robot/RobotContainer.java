@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,7 +44,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
 
-  private final XboxController driverController = new XboxController(0);
+  public final XboxController driverController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
 
   /* --- Subsystems --- */
@@ -51,7 +52,11 @@ public class RobotContainer {
   private Pigeon pigeon = new Pigeon();
   private SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
   private Intake intake = new Intake();
-
+  public Agitator agitator = new Agitator();
+  public Climber climber = new Climber();
+  public KickerWheel kickerWheel = new KickerWheel();
+  public Serializer serializer = new Serializer();
+  
   private final SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   /**
@@ -156,6 +161,26 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autonChooser.getSelected();
+  }
+
+  public boolean getOpRightY() {
+     return operatorController.getYButton();
+
+  }
+  public double getOpRightStickYValue() {
+    return operatorController.getY(Hand.kRight);
+  }
+
+  public boolean getDriveTriggerRight() {
+    return (driverController.getTriggerAxis(Hand.kRight)> .5) ;
+  }
+
+  public boolean getOpTriggerRight() {
+    return (driverController.getTriggerAxis(Hand.kRight)> .5) ;
+  }
+
+  public boolean getOpTriggerLeft() {
+    return (operatorController.getTriggerAxis(Hand.kRight)> .5) ;
   }
 
 }

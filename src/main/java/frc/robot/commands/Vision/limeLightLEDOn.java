@@ -1,0 +1,29 @@
+package frc.robot.commands.Vision;
+
+
+import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
+  /**
+   * Limelight LEDs will turn on
+   * <p><br/>Mode 3 is to turn on the LED</p> 
+   * @author Zayd A. & Madison J.
+   * @category VISION
+   */
+public class limeLightLEDOn extends InstantCommand {
+  private Vision vision;
+  /**
+  * Limelight LEDs will turn on
+  * <p><br/>Mode 3 is to turn on the LED</p> 
+  */
+  public limeLightLEDOn(Vision vision) {
+    this.vision = vision;
+    addRequirements(vision);
+  }
+
+  @Override
+  public void initialize() {
+    vision.setLEDMode(3);
+  }
+
+}
