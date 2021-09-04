@@ -1,6 +1,7 @@
 package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Agitator;
@@ -41,7 +42,7 @@ public class serializerBallControl extends CommandBase {
     @Override
     public void execute() {
         // The driver takes priority
-        if (robotContainer.getDriveTriggerRight()) {
+        if (robotContainer.driverController.getTriggerAxis(Hand.kRight) > .5) { 
             if (shooter.shooterAtVelocity) { 
                 /* if (i < 10) {
                     if(Robot.KickerWheel.getKickerSpeed() < 3500){
@@ -56,7 +57,7 @@ public class serializerBallControl extends CommandBase {
                 i++; */
             }
             // If the driver isn't attempting to control it and the operator is
-        } else if (robotContainer.getOpTriggerLeft()) {
+        } else if (robotContainer.operatorController.getTriggerAxis(Hand.kLeft) > .5) {
             agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 

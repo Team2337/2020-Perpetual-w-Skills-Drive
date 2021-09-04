@@ -45,7 +45,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   public final XboxController driverController = new XboxController(0);
-  private final XboxController operatorController = new XboxController(1);
+  public final XboxController operatorController = new XboxController(1);
+  public final XboxController operatorControls = new XboxController(1);
 
   /* --- Subsystems --- */
   public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
@@ -55,7 +56,7 @@ public class RobotContainer {
   public Agitator agitator = new Agitator();
   public Climber climber = new Climber();
   public KickerWheel kickerWheel = new KickerWheel();
-  public Serializer serializer = new Serializer();
+  
   
   private final SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -152,6 +153,85 @@ public class RobotContainer {
 
     SmartDashboard.putData("AutonChooser", autonChooser);
     // SmartDashboard.putData("Reset Drive Encoder", new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));
+
+
+// ***********************  Operator ******************************
+
+final JoystickButton op_greenA = new JoystickButton(operatorController, XboxController.Button.kA.value);
+final JoystickButton op_redB = new JoystickButton(operatorController, XboxController.Button.kB.value);
+final JoystickButton op_blueX = new JoystickButton(operatorController, XboxController.Button.kX.value);
+final JoystickButton op_yellowY = new JoystickButton(operatorController, XboxController.Button.kY.value);
+final JoystickButton op_start = new JoystickButton(operatorController, XboxController.Button.kStart.value);
+final JoystickButton op_back = new JoystickButton(operatorController, XboxController.Button.kBack.value);
+final JoystickButton op_bumperleft = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
+final JoystickButton op_bumperRight = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
+
+
+op_yellowY.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "farShot"));
+op_redB.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "nearShot"));
+op_blueX.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "frontTrenchShot"));
+op_greenA.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "frontTrenchRunShot"));
+
+op_start.whenPressed(new adjustSerializer(Robot.Serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
+op_start.whenReleased(new limeLightLEDOn(Robot.Vision).andThen(new shooterSystemOn()));
+
+op_back. whenPressed(new shooterSystemOff().andThen(new stopShooter(Robot.Shooter)).andThen(new limeLightLEDOff(Robot.Vision)));
+
+op_bumperRight    .whenPressed(new runIntake(Robot.Intake, -Constants.INTAKEFORWARDSPEED));
+op_.bumperRight    .whenReleased(new stopIntake(Robot.Intake));
+
+op_bumperLeft.whenPressed(new feedSystemReverse());
+op_bumperLeft.whenReleased(new feedSystemStop());
+
+
+operatorJoystick.leftStickButton          .whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
+operatorJoystick.leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
+
+
+
+// ***********************  Operator Station ******************************
+
+/*
+    public JoystickButton  GreenButton  = new JoystickButton(this, 1);  // greenA
+    public JoystickButton  RedButton    = new JoystickButton(this, 2);  red B
+    public JoystickButton  WhiteButton  = new JoystickButton(this, 7);  back
+    public JoystickButton  YellowButton = new JoystickButton(this, 8);  start
+    public JoystickButton  BlueButton   = new JoystickButton(this, 9);  left stick
+    public JoystickButton  BlackButton  = new JoystickButton(this, 10);  right stick
+
+    public JoystickButton  ClearSwitch  = new JoystickButton(this, 3);  Blue x
+    public JoystickButton  YellowSwitch = new JoystickButton(this, 4); yellow y
+    public JoystickButton  BlueSwitch   = new JoystickButton(this, 5);  bumper left
+    public JoystickButton  BlackSwitch  = new JoystickButton(this, 6);  bumper right
+    */
+
+
+final JoystickButton blackSwitch = new JoystickButton(operatorControls, XboxController.Button.kBumperRight.value); 
+final JoystickButton blackButton = new JoystickButton(operatorControls, XboxController.Button.kStickRight.value);  
+final JoystickButton blueButton = new JoystickButton(operatorControls, XboxController.Button.kStickLeft.value);
+final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxController.Button.kBumperLeft.value);
+final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
+final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
+
+
+operatorControls.BlackSwitch.whenPressed(new activateClimber(Robot.Climber, true));
+operatorControls.BlackSwitch.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "climbing"));
+operatorControls.BlackSwitch.whenReleased(new activateClimber(Robot.Climber, false));
+
+operatorControls.BlackButton.whenPressed(new runClimber(Robot.Climber, 177500, false));
+operatorControls.BlackButton.whenReleased(new runClimber(Robot.Climber, 177500, true));
+
+operatorControls.BlueButton.whenPressed(new runClimber(Robot.Climber, 50000, false));
+operatorControls.BlueButton.whenReleased(new runClimber(Robot.Climber, 50000, true));
+
+operatorControls.YellowButton.whenPressed(new runControlPanelMode(Robot.KickerWheel));
+operatorControls.YellowButton.whenReleased(new stopKicker(Robot.KickerWheel));
+
+operatorControls.BlueSwitch.whenPressed(new ChangeVisionAngleOffset(Robot.OperatorAngleAdjustment, false));
+
+operatorControls.YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));
+operatorControls.YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
+
   }
 
   /**
