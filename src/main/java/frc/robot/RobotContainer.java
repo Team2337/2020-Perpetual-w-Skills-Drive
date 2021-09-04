@@ -17,6 +17,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Agitator.*;
+import frc.robot.commands.Climber.activateClimber;
+import frc.robot.commands.Climber.runClimber;
+import frc.robot.commands.KickerWheel.runControlPanelMode;
+import frc.robot.commands.KickerWheel.stopKicker;
+import frc.robot.commands.Shooter.stopShooter;
+import frc.robot.commands.ShooterSystem.*;
+import frc.robot.commands.Vision.*;
 import frc.robot.commands.auto.GalacticSearch;
 import frc.robot.commands.auto.LPathTrajectory;
 import frc.robot.commands.auto.MotionMagicCommand;
@@ -32,7 +40,7 @@ import frc.robot.commands.auto.autonav.BarrelRacing2;
 import frc.robot.commands.auto.autonav.Bounce;
 import frc.robot.commands.auto.autonav.Slalom;
 import frc.robot.commands.auto.autonav.Slalom2;
-import frc.robot.commands.swerve.SwerveDriveCommand;
+import frc.robot.commands.swerve.*;
 import frc.robot.commands.intake.*;
 import frc.robot.subsystems.*;
 import frc.robot.nerdyfiles.controller.*;
@@ -52,12 +60,16 @@ public class RobotContainer {
 
   /* --- Subsystems --- */
   public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
-  private Pigeon pigeon = new Pigeon();
-  private SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
-  private Intake intake = new Intake();
+  //public Serializer serializer = new Serializer();
+  public Pigeon pigeon = new Pigeon();
+  public SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
+  public Intake intake = new Intake();
   public Agitator agitator = new Agitator();
   public Climber climber = new Climber();
   public KickerWheel kickerWheel = new KickerWheel();
+  public Shooter shooter = new Shooter();
+  public OperatorAngleAdjustment operatorAngleAdjustment = new OperatorAngleAdjustment();
+  public Vision vision = new Vision();
   
   
   private final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -70,6 +82,8 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    
 
     // Resets the pigeon to 0
     pigeon.resetPidgey();
@@ -172,37 +186,40 @@ final JoystickButton op_rightStickButton = new JoystickButton(operatorController
 //final JoystickButton op_triggerLeft = new JoystickButton(operatorController, XboxController.Axis.kLeftTrigger.value);
 final JoystickButton op_triggerRight = new JoystickButton(operatorController, XboxController.Axis.kRightTrigger.value);
 final Trigger op_triggerLeft = new Trigger();
-op_triggerLeft.whenActive(command);
 
 
 
-op_triggerRight   .whenPressed(new runIntake(Robot.Intake, Constants.INTAKEFORWARDSPEED));
-op_triggerRight   .whenReleased(new stopIntake(Robot.Intake));
+//op_triggerRight   .whenPressed(new runIntake(intake, Constants.INTAKEFORWARDSPEED));
+//op_triggerRight   .whenReleased(new stopIntake(intake));
 
-op_triggerRight.whenPressed(new runAgitator(Robot.Agitator, Constants.AGITATORSPEED));
-op_triggerRight.whenReleased(new stopAgitator(Robot.Agitator));
-
-op_bumperRight    .whenPressed(new runIntake(Robot.Intake, -Constants.INTAKEFORWARDSPEED));
-op_bumperRight    .whenReleased(new stopIntake(Robot.Intake));
-
-op_bumperleft.whenPressed(new feedSystemReverse());
-op_bumperleft.whenReleased(new feedSystemStop());
-
-op_yellowY.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "farShot"));
-op_redB.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "nearShot"));
-op_blueX.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "frontTrenchShot"));
-op_greenA.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "frontTrenchRunShot"));
-
-op_start.whenPressed(new adjustSerializer(Robot.Serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
-op_start.whenReleased(new limeLightLEDOn(Robot.Vision).andThen(new shooterSystemOn()));
-
-op_back. whenPressed(new shooterSystemOff().andThen(new stopShooter(Robot.Shooter)).andThen(new limeLightLEDOff(Robot.Vision)));
+//op_triggerRight.whenPressed(new runAgitator(agitator, Constants.AGITATORSPEED));
+//op_triggerRight.whenReleased(new stopAgitator(agitator));
 
 
 
 
-op_leftStickButton          .whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
-op_leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
+op_bumperRight    .whenPressed(new runIntake(intake, -Constants.INTAKEFORWARDSPEED));
+op_bumperRight    .whenReleased(new stopIntake(intake));
+
+//op_bumperleft.whenPressed(new feedSystemReverse());
+//op_bumperleft.whenReleased(new feedSystemStop());
+/*
+op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot"));
+op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot"));
+op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot"));
+op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot"));
+*/
+
+//op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
+//op_start.whenReleased(new limeLightLEDOn(vision).andThen(new shooterSystemOn()));
+
+//op_back. whenPressed(new shooterSystemOff().andThen(new stopShooter(shooter)).andThen(new limeLightLEDOff(vision)));
+
+
+
+
+//op_leftStickButton.whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
+//op_leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
 
 
 
@@ -230,24 +247,26 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
+/*
+blackSwitch.whenPressed(new activateClimber(climber, true));
+blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
+blackSwitch.whenReleased(new activateClimber(climber, false));
 
-operatorControls.BlackSwitch.whenPressed(new activateClimber(Robot.Climber, true));
-operatorControls.BlackSwitch.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "climbing"));
-operatorControls.BlackSwitch.whenReleased(new activateClimber(Robot.Climber, false));
+blackButton.whenPressed(new runClimber(climber, 177500, false));
+blackButton.whenReleased(new runClimber(climber, 177500, true));
 
-operatorControls.BlackButton.whenPressed(new runClimber(Robot.Climber, 177500, false));
-operatorControls.BlackButton.whenReleased(new runClimber(Robot.Climber, 177500, true));
+blueButton.whenPressed(new runClimber(climber, 50000, false));
+blueButton.whenReleased(new runClimber(climber, 50000, true));
 
-operatorControls.BlueButton.whenPressed(new runClimber(Robot.Climber, 50000, false));
-operatorControls.BlueButton.whenReleased(new runClimber(Robot.Climber, 50000, true));
+yellowButton.whenPressed(new runControlPanelMode(kickerWheel));
+yellowButton.whenReleased(new stopKicker(kickerWheel));
 
-operatorControls.YellowButton.whenPressed(new runControlPanelMode(Robot.KickerWheel));
-operatorControls.YellowButton.whenReleased(new stopKicker(Robot.KickerWheel));
+blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, false));
+*/
 
-operatorControls.BlueSwitch.whenPressed(new ChangeVisionAngleOffset(Robot.OperatorAngleAdjustment, false));
+//YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));
+//YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
 
-operatorControls.YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));
-operatorControls.YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
 
   }
 
@@ -265,7 +284,7 @@ operatorControls.YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
      return operatorController.getYButton();
 
   }
-  public double getOpRightStickYValue() {
+  public double getOpRightStickYValue()  {
     return operatorController.getY(Hand.kRight);
   }
 

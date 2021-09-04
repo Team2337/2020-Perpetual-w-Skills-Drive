@@ -37,6 +37,8 @@ public class SwerveDrivetrain extends SubsystemBase {
    */
   private FXSwerveModule[] modules;
 
+  private boolean isFieldOriented;
+
   /**
    * Should be in the same order as the swerve modules (see above)
    * Positive x values represent moving toward the front of the robot
@@ -229,6 +231,10 @@ public class SwerveDrivetrain extends SubsystemBase {
     for(FXSwerveModule module : modules) {
       module.logDebug();
     }
+  }
+
+  public void setFieldOriented(boolean state) {
+    isFieldOriented = state;
   }
 
 }

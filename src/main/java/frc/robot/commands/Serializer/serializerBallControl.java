@@ -42,7 +42,8 @@ public class serializerBallControl extends CommandBase {
     @Override
     public void execute() {
         // The driver takes priority
-        if (robotContainer.driverController.getTriggerAxis(Hand.kRight) > .5) { 
+        if (robotContainer.getDriveTriggerRight()) { 
+            
             if (shooter.shooterAtVelocity) { 
                 /* if (i < 10) {
                     if(Robot.KickerWheel.getKickerSpeed() < 3500){
@@ -53,11 +54,12 @@ public class serializerBallControl extends CommandBase {
                 } else if (i > 50 * 0.5) { */
                     serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
                     agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
-                /* }
+                /*
                 i++; */
             }
+            
             // If the driver isn't attempting to control it and the operator is
-        } else if (robotContainer.operatorController.getTriggerAxis(Hand.kLeft) > .5) {
+        } else if (robotContainer.getOpTriggerLeft()) {
             agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 

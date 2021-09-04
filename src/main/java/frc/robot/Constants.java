@@ -34,8 +34,8 @@ public final class Constants {
    * as opposed to having a length and a width. Keep in mind - this will not work
    * in the future if the robot is not a perfect square.
    */
-  private static final double DRIVETRAIN_WIDTH_INCHES = 17;
-  public static final double DRIVETRAIN_LENGTH_INCHES = 17;
+  private static final double DRIVETRAIN_WIDTH_INCHES = 23.5;
+  public static final double DRIVETRAIN_LENGTH_INCHES = 22.5;
 
   // The module inset from the outside edges of the robot
   private static final double MODULE_INSET_WIDTH_INCHES = 3.25;
@@ -106,22 +106,22 @@ public final class Constants {
   public static final int MODULE0_DRIVE_MOTOR_ID = 0;
   public static final int MODULE0_ANGLE_MOTOR_ID = 4;
   public static final int MODULE0_ANGLE_CANCODER_ID = 1;
-  public static final double MODULE0_ANGLE_OFFSET = -230.801;
+  public static final double MODULE0_ANGLE_OFFSET = -170.801;
 
   public static final int MODULE1_DRIVE_MOTOR_ID = 1;
   public static final int MODULE1_ANGLE_MOTOR_ID = 5;
   public static final int MODULE1_ANGLE_CANCODER_ID = 2;
-  public static final double MODULE1_ANGLE_OFFSET = -36.826;
+  public static final double MODULE1_ANGLE_OFFSET = -126.826;
 
   public static final int MODULE2_DRIVE_MOTOR_ID = 14;
   public static final int MODULE2_ANGLE_MOTOR_ID = 10;
   public static final int MODULE2_ANGLE_CANCODER_ID = 3;
-  public static final double MODULE2_ANGLE_OFFSET = -346.992;
+  public static final double MODULE2_ANGLE_OFFSET = -260.992;
 
   public static final int MODULE3_DRIVE_MOTOR_ID = 15;
   public static final int MODULE3_ANGLE_MOTOR_ID = 11;
   public static final int MODULE3_ANGLE_CANCODER_ID = 4;
-  public static final double MODULE3_ANGLE_OFFSET = -15.557;
+  public static final double MODULE3_ANGLE_OFFSET = -8.557;
 
   //public static final int INTAKE = 6;
 

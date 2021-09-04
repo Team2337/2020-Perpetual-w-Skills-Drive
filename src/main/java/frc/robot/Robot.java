@@ -26,13 +26,13 @@ public class Robot extends TimedRobot {
 
   public static boolean isComp = false;
   public static Utilities Utilities;
-  public static Serializer serializer;
+
   public boolean Logger;
 
   private Command autonomousCommand;
 
   private RobotContainer robotContainer;
-
+  public Serializer serializer;
   private PixyCam2Wire pixyCam;
 
   /**
@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     Utilities = new Utilities();
-    serializer = new Serializer();
+    //serializer = new Serializer();
 
 
 

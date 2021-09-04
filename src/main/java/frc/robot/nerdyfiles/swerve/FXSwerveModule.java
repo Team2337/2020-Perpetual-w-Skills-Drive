@@ -158,6 +158,7 @@ public class FXSwerveModule {
         driveMotor.configClosedloopRamp(0.1);
         driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 0);
         driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 0);
+        driveMotor.setInverted(true);
 
         /* --- Talon FX Drive Configurations --- */
         driveTalonFXConfiguration.slot0.kP = kDriveP;
