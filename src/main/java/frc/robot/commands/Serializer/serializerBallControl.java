@@ -2,7 +2,10 @@ package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Serializer;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -10,7 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * A command that sets the kicker speed using the Kicker subsystem.
  */
 public class serializerBallControl extends CommandBase {
+    private Agitator agitator;
+    private RobotContainer robotContainer;
     private Serializer serializer;
+    private Shooter shooter;
     private int i = 0;
     private int iteration = 0;
     private double position = 0;
@@ -35,8 +41,8 @@ public class serializerBallControl extends CommandBase {
     @Override
     public void execute() {
         // The driver takes priority
-        if (Robot.OI.driverJoystick.triggerRight.get()) {
-            if (Robot.Shooter.shooterAtVelocity) { 
+        if (robotContainer.getDriveTriggerRight()) {
+            if (shooter.shooterAtVelocity) { 
                 /* if (i < 10) {
                     if(Robot.KickerWheel.getKickerSpeed() < 3500){
                         Robot.Serializer.setSerializerSpeed(Constants.SERIALIZERREVERSESPEED);
@@ -45,13 +51,13 @@ public class serializerBallControl extends CommandBase {
                     Robot.Serializer.stopSerializer();
                 } else if (i > 50 * 0.5) { */
                     serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
-                    Robot.Agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
+                    agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
                 /* }
                 i++; */
             }
             // If the driver isn't attempting to control it and the operator is
-        } else if (Robot.OI.operatorJoystick.triggerLeft.get()) {
-            Robot.Agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
+        } else if (robotContainer.getOpTriggerLeft()) {
+            agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 
                     position = serializer.getSerializerPosition() + 7400;
@@ -68,13 +74,13 @@ public class serializerBallControl extends CommandBase {
                 serializer.stopSerializer(); 
             }  
             if(serializer.topSerializerSensor.get()){
-                Robot.Agitator.stopAgitator();
+                agitator.stopAgitator();
             }
             
         } else {
             // If no-one is trying to control the kicker wheel, stop it
             serializer.stopSerializer();
-            Robot.Agitator.stopAgitator();
+            agitator.stopAgitator();
             //Also, the speed checking iterations would need to be reset
             i = 0;
         }
