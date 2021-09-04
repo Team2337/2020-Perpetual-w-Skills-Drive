@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.auto.GalacticSearch;
 import frc.robot.commands.auto.LPathTrajectory;
 import frc.robot.commands.auto.MotionMagicCommand;
@@ -34,6 +35,7 @@ import frc.robot.commands.auto.autonav.Slalom2;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.intake.*;
 import frc.robot.subsystems.*;
+import frc.robot.nerdyfiles.controller.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -165,7 +167,26 @@ final JoystickButton op_start = new JoystickButton(operatorController, XboxContr
 final JoystickButton op_back = new JoystickButton(operatorController, XboxController.Button.kBack.value);
 final JoystickButton op_bumperleft = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
 final JoystickButton op_bumperRight = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
+final JoystickButton op_leftStickButton = new JoystickButton(operatorController, XboxController.Button.kStickLeft.value);
+final JoystickButton op_rightStickButton = new JoystickButton(operatorController, XboxController.Button.kStickRight.value);
+//final JoystickButton op_triggerLeft = new JoystickButton(operatorController, XboxController.Axis.kLeftTrigger.value);
+final JoystickButton op_triggerRight = new JoystickButton(operatorController, XboxController.Axis.kRightTrigger.value);
+final Trigger op_triggerLeft = new Trigger();
+op_triggerLeft.whenActive(command);
 
+
+
+op_triggerRight   .whenPressed(new runIntake(Robot.Intake, Constants.INTAKEFORWARDSPEED));
+op_triggerRight   .whenReleased(new stopIntake(Robot.Intake));
+
+op_triggerRight.whenPressed(new runAgitator(Robot.Agitator, Constants.AGITATORSPEED));
+op_triggerRight.whenReleased(new stopAgitator(Robot.Agitator));
+
+op_bumperRight    .whenPressed(new runIntake(Robot.Intake, -Constants.INTAKEFORWARDSPEED));
+op_bumperRight    .whenReleased(new stopIntake(Robot.Intake));
+
+op_bumperleft.whenPressed(new feedSystemReverse());
+op_bumperleft.whenReleased(new feedSystemStop());
 
 op_yellowY.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "farShot"));
 op_redB.whenPressed(new SetGyroAngleOffset(Robot.OperatorAngleAdjustment, "nearShot"));
@@ -177,15 +198,11 @@ op_start.whenReleased(new limeLightLEDOn(Robot.Vision).andThen(new shooterSystem
 
 op_back. whenPressed(new shooterSystemOff().andThen(new stopShooter(Robot.Shooter)).andThen(new limeLightLEDOff(Robot.Vision)));
 
-op_bumperRight    .whenPressed(new runIntake(Robot.Intake, -Constants.INTAKEFORWARDSPEED));
-op_.bumperRight    .whenReleased(new stopIntake(Robot.Intake));
-
-op_bumperLeft.whenPressed(new feedSystemReverse());
-op_bumperLeft.whenReleased(new feedSystemStop());
 
 
-operatorJoystick.leftStickButton          .whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
-operatorJoystick.leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
+
+op_leftStickButton          .whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
+op_leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
 
 
 
@@ -233,6 +250,7 @@ operatorControls.YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));
 operatorControls.YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
 
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
