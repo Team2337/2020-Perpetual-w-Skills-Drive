@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.Serializer.serializerBallControl;
 
  /** 
@@ -42,6 +43,9 @@ public class Serializer extends SubsystemBase {
   // Motors
   private TalonFX serializerMotor;
   public TalonFXConfiguration FXConfig;
+  private RobotContainer robotContainer;
+  private Shooter shooter;
+  private Agitator agitator;
 
   // Current limit configuration
   private StatorCurrentLimitConfiguration currentLimitConfigurationSerializerMotor = new StatorCurrentLimitConfiguration();
@@ -60,6 +64,7 @@ public class Serializer extends SubsystemBase {
  */
   public Serializer() {
   // The configuration, ramp rate, and inversion are set here as well as the ports.
+    
     serializerMotor = new TalonFX(Constants.SERIALIZER);
     serializerMotor.setInverted(false);
     serializerMotor.configOpenloopRamp(0.2);
@@ -102,7 +107,7 @@ public class Serializer extends SubsystemBase {
      counter.setUpSource(topSerializerSensor);
      counter.setMaxPeriod(2); 
      
-      setDefaultCommand(new serializerBallControl(this));
+      //setDefaultCommand(new serializerBallControl(this, agitator));
     //  setDefaultCommand(new serializerCoOp(this));
 
   }

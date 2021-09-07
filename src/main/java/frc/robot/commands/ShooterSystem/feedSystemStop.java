@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
  * @author Nicholas Stokes
  */
 public class feedSystemStop extends ParallelCommandGroup {
-    private Agitator agitator;
-    private Serializer serializer;
+    //private Agitator agitator;
+    //private Serializer serializer;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    public feedSystemStop() {
+    public feedSystemStop(Agitator agitator, Serializer serializer) {
         addCommands(
             new stopSerializer(serializer),
             new stopAgitator(agitator));

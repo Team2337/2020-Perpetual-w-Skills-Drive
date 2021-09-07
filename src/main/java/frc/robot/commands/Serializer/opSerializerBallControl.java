@@ -1,24 +1,19 @@
 package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Serializer;
-import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * A command that sets the kicker speed using the Kicker subsystem.
  */
-public class serializerBallControl extends CommandBase {
+public class opSerializerBallControl extends CommandBase {
     private Agitator agitator;
     private RobotContainer robotContainer;
     private Serializer serializer;
-    private Shooter shooter;
-    private int i = 0;
     private int iteration = 0;
     private double position = 0;
 
@@ -27,7 +22,7 @@ public class serializerBallControl extends CommandBase {
      * 
      * @param kickerWheel The subsystem used by this command. (Kicker)
      */
-    public serializerBallControl(Serializer serializer, Agitator agitator) {
+    public opSerializerBallControl(Serializer serializer, Agitator agitator) {
         this.serializer = serializer;
         this.agitator = agitator;
         // Use addRequirements() here to declare subsystem dependencies.
@@ -43,22 +38,10 @@ public class serializerBallControl extends CommandBase {
     @Override
     public void execute() {
 
-        serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
-        agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
-
-        /*
-        // The driver takes priority
-        if (robotContainer.getDriveTriggerRight()) { 
-            
-            if (shooter.shooterAtVelocity) { 
     
-                    serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
-                    agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
-
-            }
-            
-            // If the driver isn't attempting to control it and the operator is
-        } else if (robotContainer.getOpTriggerLeft()) {
+    
+        // The driver takes priority
+         if (robotContainer.getOpTriggerLeft()) {
             agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 
@@ -83,14 +66,15 @@ public class serializerBallControl extends CommandBase {
             // If no-one is trying to control the kicker wheel, stop it
             serializer.stopSerializer();
             agitator.stopAgitator();
-            //Also, the speed checking iterations would need to be reset
-            i = 0;
+
         }
-        */
+        
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        serializer.stopSerializer();
+        agitator.stopAgitator();
     }
 }

@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
  * @author Sean Lynch
  */
 public class feedSystemReverse extends ParallelCommandGroup {
-    private Agitator agitator;
-    private Serializer serializer;
+    //private Agitator agitator;
+    //private Serializer serializer;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    public feedSystemReverse() {
+    public feedSystemReverse(Agitator agitator, Serializer serializer) {
         addCommands(
             new runSerializer(serializer, Constants.SERIALIZERREVERSESPEED),
             new runAgitator(agitator, Constants.AGITATORREVERSESPEED));

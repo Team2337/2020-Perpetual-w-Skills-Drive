@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     if(pixyCam.pixySeesTarget()) {
       pixyCam.printPath();
     }
-
+/*
     String mac = "xx:xx:xx:xx:xx:xx";
     // Attempt to get the MAC address of the robot
     try {
@@ -84,6 +84,7 @@ public class Robot extends TimedRobot {
       System.out.println("CompBot " + mac);
       isComp = true;
     }
+    */
   }
 
   /**

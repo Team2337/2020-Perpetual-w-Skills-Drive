@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * @author Michael F., Bryce G.
  */
 public class feedSystemForward extends SequentialCommandGroup {
-    private Agitator agitator;
-    private Serializer serializer;
+    //private Agitator agitator;
+    //private Serializer serializer;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    public feedSystemForward() {
+    public feedSystemForward(Agitator agitator, Serializer serializer) {
         addCommands(
             //new holdKickerPosition(Robot.KickerWheel), //TODO: FIX ME
             new runAgitator(agitator, Constants.AGITATORSPEED),
