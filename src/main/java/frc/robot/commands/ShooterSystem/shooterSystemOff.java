@@ -17,7 +17,7 @@ public class shooterSystemOff extends ParallelCommandGroup {
 
     private Shooter shooter;
     private KickerWheel kickerWheel;
-    public shooterSystemOff() {
+    public shooterSystemOff(Shooter shooter, KickerWheel kickerWheel) {
         addCommands(
             new stopShooter(shooter),
             new stopKicker(kickerWheel).andThen(new holdKickerPosition(kickerWheel)));

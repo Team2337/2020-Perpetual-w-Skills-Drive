@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class serializerBallControl extends CommandBase {
     private Agitator agitator;
     private RobotContainer robotContainer;
-    private Serializer serializer;
+    public Serializer serializer;
     private Shooter shooter;
     private int i = 0;
     private int iteration = 0;
@@ -27,11 +27,12 @@ public class serializerBallControl extends CommandBase {
      * 
      * @param kickerWheel The subsystem used by this command. (Kicker)
      */
-    public serializerBallControl(Serializer serializer, Agitator agitator) {
+    public serializerBallControl(Serializer serializer)  {// , Shooter shooter, Agitator agitator) {
         this.serializer = serializer;
-        this.agitator = agitator;
+        //agitator = agitator
+        //shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(serializer);
+        addRequirements(serializer); //, shooter, agitator);
     }
 
     // Called when the command is initially scheduled.
@@ -43,12 +44,11 @@ public class serializerBallControl extends CommandBase {
     @Override
     public void execute() {
 
-        serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
-        agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
 
-        /*
+
+        
         // The driver takes priority
-        if (robotContainer.getDriveTriggerRight()) { 
+        if (serializer.dr_control) { 
             
             if (shooter.shooterAtVelocity) { 
     
@@ -58,7 +58,7 @@ public class serializerBallControl extends CommandBase {
             }
             
             // If the driver isn't attempting to control it and the operator is
-        } else if (robotContainer.getOpTriggerLeft()) {
+        } else if (serializer.op_control) {
             agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 
@@ -86,7 +86,7 @@ public class serializerBallControl extends CommandBase {
             //Also, the speed checking iterations would need to be reset
             i = 0;
         }
-        */
+        
     }
 
     // Called once the command ends or is interrupted.

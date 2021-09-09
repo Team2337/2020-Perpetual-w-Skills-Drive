@@ -1,5 +1,6 @@
 package frc.robot.commands.Vision;
 
+import frc.robot.subsystems.OperatorAngleAdjustment;
 //import frc.robot.subsystems.OperatorAngleAdjustment;// added vision for op angle adj
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -8,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  * Sets whether or not we're tracking a ball
  */
 public class setBallTracking extends InstantCommand {
-    //private OperatorAngleAdjustment operatorAngleAdjustment;
+    private OperatorAngleAdjustment operatorAngleAdjustment;
     private Vision vision; // added op angle adj
     private boolean ballTrackingEnabled;
 
@@ -18,12 +19,20 @@ public class setBallTracking extends InstantCommand {
      * @param operatorAngleAdjustment The OperatorAngleAdjustment subsystem
      * @param ballTrackingEnabled     Whether or not we're tracking a ball
      */
+    /*
     //public setBallTracking(OperatorAngleAdjustment operatorAngleAdjustment, boolean ballTrackingEnabled) {
        // this.operatorAngleAdjustment = operatorAngleAdjustment;
        public setBallTracking(Vision vision, boolean ballTrackingEnabled) {// added vision for op angle adj
         this.ballTrackingEnabled = ballTrackingEnabled;
         //addRequirements(operatorAngleAdjustment);
         addRequirements(vision);  // added vision for op angle adj
+*/
+
+//Not sure which one is the correct one...
+        public setBallTracking(OperatorAngleAdjustment operatorAngleAdjustment, boolean ballTrackingEnabled) {
+            this.operatorAngleAdjustment = operatorAngleAdjustment;
+            this.ballTrackingEnabled = ballTrackingEnabled;
+            addRequirements(operatorAngleAdjustment);
     }
 
     @Override

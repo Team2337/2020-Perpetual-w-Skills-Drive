@@ -18,7 +18,7 @@ public class shooterSystemOn extends SequentialCommandGroup {
     private Shooter shooter;
     private KickerWheel kickerWheel;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    public shooterSystemOn() {
+    public shooterSystemOn(Shooter shooter, KickerWheel kickerWheel ) {
         addCommands(
             new WaitCommand(0.1).withTimeout(0.1),
             new runKicker(kickerWheel),

@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 /**
@@ -39,6 +38,8 @@ public class OperatorAngleAdjustment extends SubsystemBase {
   /* --- Private Boolean Values --- */
   private boolean slowRotateMode = false;
   private boolean ballTrackingEnabled = false;
+
+  private Shooter shooter;
 
   /**
    * Class to change the robot's angle based on an offset. These offsets will be

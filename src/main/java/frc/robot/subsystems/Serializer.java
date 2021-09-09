@@ -40,12 +40,15 @@ public class Serializer extends SubsystemBase {
   public DigitalInput topSerializerSensor;
   public Counter counter;
 
+  public boolean dr_control = false;
+  public boolean op_control = false;
+
   // Motors
   private TalonFX serializerMotor;
   public TalonFXConfiguration FXConfig;
+  public Agitator agitator;
+  public Shooter shooter;
   private RobotContainer robotContainer;
-  private Shooter shooter;
-  private Agitator agitator;
 
   // Current limit configuration
   private StatorCurrentLimitConfiguration currentLimitConfigurationSerializerMotor = new StatorCurrentLimitConfiguration();
@@ -106,8 +109,11 @@ public class Serializer extends SubsystemBase {
      counter.setUpDownCounterMode();
      counter.setUpSource(topSerializerSensor);
      counter.setMaxPeriod(2); 
-     
-      //setDefaultCommand(new serializerBallControl(this, agitator));
+
+     dr_control = false;
+     op_control = false;
+
+    //setDefaultCommand(new serializerBallControl(this));// , shooter, agitator));
     //  setDefaultCommand(new serializerCoOp(this));
 
   }
@@ -178,7 +184,23 @@ public class Serializer extends SubsystemBase {
   public double getSerializerTemperature() { 
     return serializerMotor.getTemperature();
   }
+
+  public void setDrControlTrue() {
+    dr_control = true;
+  }
   
+  public void setDrControlFalse() {
+    dr_control = false;
+  }
+
+  public void setOpControlTrue() {
+    op_control = true;
+  }
+  
+  public void setOpControlFalse() {
+    op_control = false;
+  }
+
   /**
    * @param position
    * This is the amount to shift by

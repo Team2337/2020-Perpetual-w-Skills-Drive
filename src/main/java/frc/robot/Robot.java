@@ -32,7 +32,6 @@ public class Robot extends TimedRobot {
   private Command autonomousCommand;
 
   private RobotContainer robotContainer;
-  public Serializer serializer;
   private PixyCam2Wire pixyCam;
 
   /**

@@ -66,24 +66,27 @@ public class RobotContainer {
   public Pigeon pigeon = new Pigeon();
   public SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
   public Intake intake = new Intake();
-  public Agitator agitator;// = new Agitator();
+  public Agitator agitator = new Agitator();
   public Climber climber = new Climber();
   public KickerWheel kickerWheel = new KickerWheel();
   public Shooter shooter = new Shooter();
-  public OperatorAngleAdjustment operatorAngleAdjustment = new OperatorAngleAdjustment();
   public Vision vision = new Vision();
-  public Serializer serializer;// = new Serializer();
+  public Serializer serializer = new Serializer();
+  public OperatorAngleAdjustment operatorAngleAdjustment = new OperatorAngleAdjustment();
   
   
   private final SendableChooser<Command> autonChooser = new SendableChooser<>();
+
+
+  
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand(swerveDrivetrain, driverController, operatorController));
-    agitator = new Agitator();
-    serializer = new Serializer();
+  
     // Configure the button bindings
     configureButtonBindings();
 
@@ -155,12 +158,20 @@ public class RobotContainer {
 
     final JoystickButton greenA = new JoystickButton(driverController, XboxController.Button.kA.value);
     final JoystickButton redB = new JoystickButton(driverController, XboxController.Button.kB.value);
+    final JoystickButton blueX = new JoystickButton(driverController, XboxController.Button.kX.value);
+    
 
     final JoystickButton bumperRight = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
     final JoystickButton bumperLeft = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
+    final JoystickButton back = new JoystickButton(driverController, XboxController.Button.kBack.value);
+    final JoystickButton start = new JoystickButton(driverController, XboxController.Button.kStart.value);
     final Button dr_TriggerLeft = new Button(() -> driverController.getRawAxis(9) > .5);  //TODO: find the right axis and make sure it is positive. 
     final Button dr_TriggerRight = new Button(() -> driverController.getRawAxis(10) > -.5);  //TODO: find the right axis
 
+
+    dr_TriggerRight.whenPressed(() -> serializer.setDrControlTrue());
+    dr_TriggerRight.whenReleased(() -> serializer.setDrControlFalse());
+/*
     //Drive motor controls
     greenA.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
     // greenA.whenPressed(new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));
@@ -175,6 +186,30 @@ public class RobotContainer {
 
     SmartDashboard.putData("AutonChooser", autonChooser);
     // SmartDashboard.putData("Reset Drive Encoder", new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));
+*/
+bumperLeft.whenPressed(new ChangeGyroAngleOffset(operatorAngleAdjustment, true));
+bumperLeft.whenReleased(new ChangeGyroAngleOffset(operatorAngleAdjustment, false));
+
+bumperRight.whenPressed(new runSerializer(serializer, Constants.SERIALIZERDRIVERFORWARDSPEED));
+bumperRight.whenReleased(new stopSerializer(serializer));
+
+
+/*
+        // Slow rotates to the right
+        redB         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, -Constants.Swerve.SLOWROTATESPEED));
+        redB         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0));
+        
+        // Slow rotates to the left
+        blueX         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, Constants.Swerve.SLOWROTATESPEED));
+        blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0));
+*/
+        /////////povUp.whenPressed(new ResetGyro(Pigeon));
+
+        back.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, true));
+        back.whenReleased(new ChangeVisionAngleOffset(operatorAngleAdjustment, false));
+
+        start.whenPressed(new setBallTracking(operatorAngleAdjustment, true));
+        start.whenReleased(new setBallTracking(operatorAngleAdjustment, false));
 
 
 // ***********************  Operator ******************************
@@ -190,12 +225,16 @@ final JoystickButton op_bumperRight = new JoystickButton(operatorController, Xbo
 final JoystickButton op_leftStickButton = new JoystickButton(operatorController, XboxController.Button.kStickLeft.value);
 final JoystickButton op_rightStickButton = new JoystickButton(operatorController, XboxController.Button.kStickRight.value);
 final Button op_TriggerLeft = new Button(() -> driverController.getRawAxis(9) > .5);  //TODO: find the right axis and make sure it is positive. 
-final Button op_TriggerRight = new Button(() -> driverController.getRawAxis(10) > -.5);  //TODO: find the right axis
-final Trigger op_triggerLeft = new Trigger();
+final Button op_TriggerRight = new Button(() -> driverController.getRawAxis(4) > -.5);  //TODO: find the right axis
+
+
 
 
 op_TriggerRight.whenPressed(new opSerializerBallControl(serializer, agitator));
 op_TriggerRight.whenReleased(new stopSerializer(serializer).andThen(new stopAgitator(agitator)));
+//op_TriggerRight.whenPressed(() -> serializer.setOpControlTrue());
+//op_TriggerRight.whenReleased(() -> serializer.setOpControlFalse());
+
 
 
 
@@ -213,23 +252,23 @@ op_bumperRight    .whenReleased(new stopIntake(intake));
 
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
-/*
+
 op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot"));
 op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot"));
 op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot"));
 op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot"));
-*/
-
-//op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
-//op_start.whenReleased(new limeLightLEDOn(vision).andThen(new shooterSystemOn()));
-
-//op_back. whenPressed(new shooterSystemOff().andThen(new stopShooter(shooter)).andThen(new limeLightLEDOff(vision)));
 
 
+op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
+op_start.whenReleased(new limeLightLEDOn(vision).andThen(new shooterSystemOn(shooter, kickerWheel)));
+
+op_back. whenPressed(new shooterSystemOff(shooter, kickerWheel).andThen(new stopShooter(shooter)).andThen(new limeLightLEDOff(vision)));
 
 
-//op_leftStickButton.whenPressed(new runSerializer(Robot.Serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
-//op_leftStickButton.whenReleased(new stopSerializer(Robot.Serializer));
+
+
+//op_leftStickButton.whenPressed(new runSerializer(serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
+//op_leftStickButton.whenReleased(new stopSerializer(serializer));
 
 
 
@@ -257,7 +296,7 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
-/*
+
 blackSwitch.whenPressed(new activateClimber(climber, true));
 blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
 blackSwitch.whenReleased(new activateClimber(climber, false));
@@ -272,7 +311,7 @@ yellowButton.whenPressed(new runControlPanelMode(kickerWheel));
 yellowButton.whenReleased(new stopKicker(kickerWheel));
 
 blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, false));
-*/
+
 
 //YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));
 //YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
