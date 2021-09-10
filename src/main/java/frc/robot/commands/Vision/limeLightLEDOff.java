@@ -11,19 +11,20 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
    * @category VISION
    */
 public class limeLightLEDOff extends InstantCommand {
-  private Vision subsystem;
+  private Vision vision;
 
   /**
    * Limelight LED will turn off
    * <p><br/>Mode 1 turns off the LEDs</p>
    */
-  public limeLightLEDOff(Vision subsystem) {
-    addRequirements(subsystem);
+  public limeLightLEDOff(Vision vision) {
+    this.vision = vision;
+    addRequirements(vision);
   }
 
   @Override
   public void initialize() {
-    subsystem.setLEDMode(1);
+    vision.setLEDMode(1);
   }
 
 }

@@ -37,6 +37,7 @@ public class startShooter extends CommandBase {
     // they are set to another value after a set speed.
     //Sets the speed.
     subsystem.setShooterSpeed(subsystem.getFutureSpeed());
+
   }
   
   

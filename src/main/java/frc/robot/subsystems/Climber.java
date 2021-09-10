@@ -8,10 +8,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.Climber.runClimberJoystick;
 
 /**
@@ -30,7 +32,10 @@ public class Climber extends SubsystemBase {
   //Motor
   public TalonFX climberMotor;
 
+
   private TalonFXConfiguration TalonFXConfigurationClimber;
+
+  public XboxController operatorController;
 
   //Sets up current limit config variable
   private StatorCurrentLimitConfiguration currentLimitConfigclimber = new StatorCurrentLimitConfiguration();
@@ -39,7 +44,7 @@ public class Climber extends SubsystemBase {
    * Creates a new climber subsystem and sets up the motor.
    */
   public Climber() {
-    setDefaultCommand(new runClimberJoystick(this));
+    //setDefaultCommand(new runClimberJoystick(this, operatorController));
 
     climberMotor = new TalonFX(Constants.CLIMBER);
     TalonFXConfigurationClimber = new TalonFXConfiguration();

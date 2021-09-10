@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Agitator.*;
 import frc.robot.commands.Climber.activateClimber;
 import frc.robot.commands.Climber.runClimber;
+import frc.robot.commands.Climber.runClimberJoystick;
 import frc.robot.commands.KickerWheel.runControlPanelMode;
 import frc.robot.commands.KickerWheel.stopKicker;
 import frc.robot.commands.Serializer.*;
@@ -58,7 +59,7 @@ public class RobotContainer {
 
   public final XboxController driverController = new XboxController(0);
   public final XboxController operatorController = new XboxController(1);
-  public final XboxController operatorControls = new XboxController(1);
+  public final XboxController operatorControls = new XboxController(2);
 
   /* --- Subsystems --- */
   public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
@@ -86,6 +87,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand(swerveDrivetrain, driverController, operatorController));
+    climber.setDefaultCommand(new runClimberJoystick(climber, operatorController));
+    serializer.setDefaultCommand(new serializerBallControl(serializer, agitator, shooter, driverController, operatorController));
   
     // Configure the button bindings
     configureButtonBindings();
@@ -253,10 +256,10 @@ op_bumperRight    .whenReleased(new stopIntake(intake));
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
 
-op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot"));
-op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot"));
-op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot"));
-op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot"));
+//op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot"));
+//op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot"));
+//op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot"));
+//op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot"));
 
 
 op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
@@ -296,7 +299,7 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
-
+/*
 blackSwitch.whenPressed(new activateClimber(climber, true));
 blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
 blackSwitch.whenReleased(new activateClimber(climber, false));
@@ -306,6 +309,17 @@ blackButton.whenReleased(new runClimber(climber, 177500, true));
 
 blueButton.whenPressed(new runClimber(climber, 50000, false));
 blueButton.whenReleased(new runClimber(climber, 50000, true));
+*/
+
+op_greenA.whenPressed(new activateClimber(climber, true));
+//op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
+op_greenA.whenReleased(new activateClimber(climber, false));
+
+op_redB.whenPressed(new runClimber(climber, 177500, false));
+op_redB.whenReleased(new runClimber(climber, 177500, true));
+
+op_blueX.whenPressed(new runClimber(climber, 50000, false));
+op_blueX.whenReleased(new runClimber(climber, 50000, true));
 
 yellowButton.whenPressed(new runControlPanelMode(kickerWheel));
 yellowButton.whenReleased(new stopKicker(kickerWheel));

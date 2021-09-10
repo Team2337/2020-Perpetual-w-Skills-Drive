@@ -32,6 +32,7 @@ public class runKicker extends InstantCommand {
   public void initialize(){ 
     subsystem.kickerWheelMotor.setIdleMode(IdleMode.kCoast);
     subsystem.setKickerSpeed(subsystem.getFutureSpeed(), Constants.KickerWheel.SHORTVELOCITYP);
+
   }
 
   // Called once the command ends or is interrupted.

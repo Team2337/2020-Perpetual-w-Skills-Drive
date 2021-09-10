@@ -1,6 +1,7 @@
 package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -18,6 +19,7 @@ public class serializerBallControl extends CommandBase {
     private RobotContainer robotContainer;
     public Serializer serializer;
     private Shooter shooter;
+    private XboxController driveController, operatorController;
     private int i = 0;
     private int iteration = 0;
     private double position = 0;
@@ -27,10 +29,12 @@ public class serializerBallControl extends CommandBase {
      * 
      * @param kickerWheel The subsystem used by this command. (Kicker)
      */
-    public serializerBallControl(Serializer serializer)  {// , Shooter shooter, Agitator agitator) {
+    public serializerBallControl(Serializer serializer, Agitator agitator, Shooter shooter, XboxController driveController, XboxController operatorController)  {// , Shooter shooter, Agitator agitator) {
         this.serializer = serializer;
-        //agitator = agitator
-        //shooter = shooter;
+        this.driveController = driveController;
+        this.operatorController = operatorController;
+        this.agitator = agitator;
+        this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(serializer); //, shooter, agitator);
     }
@@ -46,19 +50,22 @@ public class serializerBallControl extends CommandBase {
 
 
 
-        
-        // The driver takes priority
-        if (serializer.dr_control) { 
-            
+        if (driveController.getRawAxis(3) > .5) { //Driver joystick right trigger
             if (shooter.shooterAtVelocity) { 
-    
+                /* if (i < 10) {
+                    if(Robot.KickerWheel.getKickerSpeed() < 3500){
+                        Robot.Serializer.setSerializerSpeed(Constants.SERIALIZERREVERSESPEED);
+                    }
+                } else if (i == 10){
+                    Robot.Serializer.stopSerializer();
+                } else if (i > 50 * 0.5) { */
                     serializer.setSerializerSpeed(Constants.SERIALIZERDRIVERFORWARDSPEED);
                     agitator.setAgitatorSpeed(Constants.AGITATORSHOOTSPEED);
-
+                /* }
+                i++; */
             }
-            
             // If the driver isn't attempting to control it and the operator is
-        } else if (serializer.op_control) {
+        } else if (operatorController.getRawAxis(2) > .5) { //Operator joystick left trigger
             agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 
