@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  * @author Michael F., Bryce G. 
  */
 public class shooterSystemOn extends SequentialCommandGroup {
-    private Shooter shooter;
-    private KickerWheel kickerWheel;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     public shooterSystemOn(Shooter shooter, KickerWheel kickerWheel ) {
         addCommands(

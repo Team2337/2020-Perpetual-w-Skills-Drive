@@ -4,17 +4,13 @@
 
 package frc.robot;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.PixyCam2Wire;
-import frc.robot.subsystems.Serializer;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

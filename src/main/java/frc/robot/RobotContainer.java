@@ -11,16 +11,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Agitator.*;
-import frc.robot.commands.Climber.activateClimber;
-import frc.robot.commands.Climber.runClimber;
 import frc.robot.commands.Climber.runClimberJoystick;
 import frc.robot.commands.KickerWheel.runControlPanelMode;
 import frc.robot.commands.KickerWheel.stopKicker;
@@ -46,7 +43,7 @@ import frc.robot.commands.auto.autonav.Slalom2;
 import frc.robot.commands.swerve.*;
 import frc.robot.commands.intake.*;
 import frc.robot.subsystems.*;
-import frc.robot.nerdyfiles.controller.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -168,8 +165,8 @@ public class RobotContainer {
     final JoystickButton bumperLeft = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
     final JoystickButton back = new JoystickButton(driverController, XboxController.Button.kBack.value);
     final JoystickButton start = new JoystickButton(driverController, XboxController.Button.kStart.value);
-    final Button dr_TriggerLeft = new Button(() -> driverController.getRawAxis(9) > .5);  //TODO: find the right axis and make sure it is positive. 
-    final Button dr_TriggerRight = new Button(() -> driverController.getRawAxis(10) > -.5);  //TODO: find the right axis
+    final Button dr_TriggerLeft = new Button(() -> driverController.getRawAxis(2) > .5);  //TODO: find the right axis and make sure it is positive. 
+    final Button dr_TriggerRight = new Button(() -> driverController.getRawAxis(3) > -.5);  //TODO: find the right axis
 
 
     dr_TriggerRight.whenPressed(() -> serializer.setDrControlTrue());
@@ -227,25 +224,32 @@ final JoystickButton op_bumperleft = new JoystickButton(operatorController, Xbox
 final JoystickButton op_bumperRight = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
 final JoystickButton op_leftStickButton = new JoystickButton(operatorController, XboxController.Button.kStickLeft.value);
 final JoystickButton op_rightStickButton = new JoystickButton(operatorController, XboxController.Button.kStickRight.value);
-final Button op_TriggerLeft = new Button(() -> driverController.getRawAxis(9) > .5);  //TODO: find the right axis and make sure it is positive. 
-final Button op_TriggerRight = new Button(() -> driverController.getRawAxis(4) > -.5);  //TODO: find the right axis
+final Button op_TriggerLeft = new Button(() -> operatorController.getRawAxis(2) > .5);  //TODO: find the right axis and make sure it is positive. 
+final Button op_TriggerRight = new Button(() -> operatorController.getRawAxis(3) > -.5);  //TODO: find the right axis
+final POVButton op_povUp = new POVButton(operatorController, 0);
+final POVButton op_povLeft = new POVButton(operatorController, 90);
+final POVButton op_povRight = new POVButton(operatorController, 180);
+final POVButton op_povDown = new POVButton(operatorController, 270);
 
 
 
 
-op_TriggerRight.whenPressed(new opSerializerBallControl(serializer, agitator));
-op_TriggerRight.whenReleased(new stopSerializer(serializer).andThen(new stopAgitator(agitator)));
+
+
+
+//op_TriggerLeft.whenPressed(new opSerializerBallControl(serializer, agitator));
+//op_TriggerLeft.whenReleased(new stopSerializer(serializer).andThen(new stopAgitator(agitator)));
 //op_TriggerRight.whenPressed(() -> serializer.setOpControlTrue());
 //op_TriggerRight.whenReleased(() -> serializer.setOpControlFalse());
 
 
 
 
-//op_TriggerRight   .whenPressed(new runIntake(intake, Constants.INTAKEFORWARDSPEED));
-//op_TriggerRight   .whenReleased(new stopIntake(intake));
+op_TriggerRight   .whenPressed(new runIntake(intake, Constants.INTAKEFORWARDSPEED));
+op_TriggerRight   .whenReleased(new stopIntake(intake));
 
-//op_TriggerRight.whenPressed(new runAgitator(agitator, Constants.AGITATORSPEED));
-//op_TriggerRight.whenReleased(new stopAgitator(agitator));
+op_TriggerRight.whenPressed(new runAgitator(agitator, Constants.AGITATORSPEED));
+op_TriggerRight.whenReleased(new stopAgitator(agitator));
 
 
 
@@ -256,16 +260,25 @@ op_bumperRight    .whenReleased(new stopIntake(intake));
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
 
-op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot", shooter, vision, kickerWheel, swerveDrivetrain));
-op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot", shooter, vision, kickerWheel, swerveDrivetrain));
-op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot", shooter, vision, kickerWheel, swerveDrivetrain));
-op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot", shooter, vision, kickerWheel, swerveDrivetrain));
-
+op_leftStickButton.whenPressed(new runSerializer(serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
+op_leftStickButton.whenReleased(new stopSerializer(serializer));
 
 op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
 op_start.whenReleased(new limeLightLEDOn(vision).andThen(new shooterSystemOn(shooter, kickerWheel)));
 
 op_back. whenPressed(new shooterSystemOff(shooter, kickerWheel).andThen(new stopShooter(shooter)).andThen(new limeLightLEDOff(vision)));
+
+op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot", shooter, vision, kickerWheel, swerveDrivetrain));
+
+op_povUp.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "0", shooter, vision, kickerWheel, swerveDrivetrain));
+op_povRight.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "90", shooter, vision, kickerWheel, swerveDrivetrain));
+op_povDown.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "180", shooter, vision, kickerWheel, swerveDrivetrain));
+op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "270", shooter, vision, kickerWheel, swerveDrivetrain));
+
+
 
 
 

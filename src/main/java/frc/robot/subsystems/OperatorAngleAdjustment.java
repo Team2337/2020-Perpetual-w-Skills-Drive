@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+
 
 /**
  * Class to change the robot's angle based on an offset. 
@@ -14,7 +14,7 @@ import frc.robot.RobotContainer;
  * @category SWERVE
  */
 public class OperatorAngleAdjustment extends SubsystemBase {
-  private RobotContainer robotContainer;
+
   /* --- Private Double Values --- */
   private double gyroOffset = 0;
   private double farShot;

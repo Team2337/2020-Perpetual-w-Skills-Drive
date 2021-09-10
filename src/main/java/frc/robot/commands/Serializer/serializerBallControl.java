@@ -2,13 +2,10 @@ package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Serializer;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -16,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class serializerBallControl extends CommandBase {
     private Agitator agitator;
-    private RobotContainer robotContainer;
     public Serializer serializer;
     private Shooter shooter;
     private XboxController driveController, operatorController;

@@ -1,16 +1,11 @@
 package frc.robot.commands.Climber;
 
-import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 
 /**
  * Sets the climber speed
@@ -19,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class runClimberJoystick extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Climber Climber;
-  private RobotContainer robotContainer;
   private double climberSpeed = 0;
   private double deadband = 0.2;
   private double maxSpeed = 1.0;

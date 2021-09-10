@@ -1,8 +1,6 @@
 package frc.robot.commands.KickerWheel;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.KickerWheel;
 
 import com.revrobotics.CANSparkMax.IdleMode;

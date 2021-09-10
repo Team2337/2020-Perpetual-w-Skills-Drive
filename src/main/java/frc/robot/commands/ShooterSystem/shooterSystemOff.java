@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 public class shooterSystemOff extends ParallelCommandGroup {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
-    private Shooter shooter;
-    private KickerWheel kickerWheel;
+    
     public shooterSystemOff(Shooter shooter, KickerWheel kickerWheel) {
         addCommands(
             new stopShooter(shooter),

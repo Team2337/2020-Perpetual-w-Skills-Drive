@@ -1,7 +1,6 @@
 package frc.robot.commands.Serializer;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Serializer;
@@ -16,8 +15,6 @@ public class serializerCoOp extends CommandBase {
     private Shooter shooter;
     private Agitator agitator;
     private RobotContainer robotContainer;
-    private int i = 0;
-
     /**
      * Sets the kicker's speed.
      * 
@@ -74,7 +71,7 @@ public class serializerCoOp extends CommandBase {
             serializer.stopSerializer();
             agitator.stopAgitator();
             //Also, the speed checking iterations would need to be reset
-            i = 0;
+            //i = 0;
         }
     }
 
