@@ -39,7 +39,10 @@ public class OperatorAngleAdjustment extends SubsystemBase {
   private boolean slowRotateMode = false;
   private boolean ballTrackingEnabled = false;
 
+  private KickerWheel kickerWheel;
   private Shooter shooter;
+  private SwerveDrivetrain swerveDrivetrain;
+  private Vision vision;
 
   /**
    * Class to change the robot's angle based on an offset. These offsets will be
@@ -90,73 +93,77 @@ public class OperatorAngleAdjustment extends SubsystemBase {
    * - sets the robot's rotational angle offset to 270 degrees
    * </ul>
    */
-  public void setFutureOffsetAngle(String mode) {
+  public void setFutureOffsetAngle(String mode, Shooter shooter, Vision vision, KickerWheel kickerWheel, SwerveDrivetrain swerveDrivetrain) {
     this.mode = mode;
+    this.shooter = shooter;
+    this.vision = vision;
+    this.kickerWheel = kickerWheel;
+    this.swerveDrivetrain = swerveDrivetrain;
     switch(mode) {
     case "farShot":
       futureOffsetAngle = farShot;
-      robotContainer.shooter.setFutureSpeed(Constants.SHOOTSPEEDFAR);
+      shooter.setFutureSpeed(Constants.SHOOTSPEEDFAR);
       
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFAR);
-      robotContainer.vision.switchPipeLine(1);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFAR);
+      vision.switchPipeLine(1);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "nearShot":
       futureOffsetAngle = nearShot;
-      robotContainer.shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
-      robotContainer.vision.switchPipeLine(0);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
+      vision.setRotateLimelight(false);
+      kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
+      vision.switchPipeLine(0);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "climbing":
       futureOffsetAngle = climbing;
-      robotContainer.vision.switchPipeLine(2);
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(false);
+      vision.switchPipeLine(2);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(false);
       break;
     case "targetLimelightOn":
-    robotContainer.vision.setRotateLimelight(true);
-    robotContainer.swerveDrivetrain.setFieldOriented(true);
+    vision.setRotateLimelight(true);
+    swerveDrivetrain.setFieldOriented(true);
       break;
     case "frontTrenchShot":
       futureOffsetAngle = frontTrenchShot;
-      robotContainer.vision.switchPipeLine(1);
-      robotContainer.shooter.setFutureSpeed(Constants.SHOOTFRONTTRENCHSPEED);
-      robotContainer.kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFRONTTRENCH); 
+      vision.switchPipeLine(1);
+      shooter.setFutureSpeed(Constants.SHOOTFRONTTRENCHSPEED);
+      kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFRONTTRENCH); 
     case "frontTrenchRunShot":
       futureOffsetAngle = nearShot;
-      robotContainer.shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
-      robotContainer.vision.switchPipeLine(1);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
+      vision.setRotateLimelight(false);
+      kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
+      vision.switchPipeLine(1);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "0":
       futureOffsetAngle = field0;
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "90":
       futureOffsetAngle = field90;
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "180":
       futureOffsetAngle = field180;
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     case "270":
       futureOffsetAngle = field270;
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(true);
       break;
     default:
       futureOffsetAngle = 0;
-      robotContainer.vision.setRotateLimelight(false);
-      robotContainer.swerveDrivetrain.setFieldOriented(true);
+      vision.setRotateLimelight(false);
+      swerveDrivetrain.setFieldOriented(true);
 
     }
   }

@@ -256,10 +256,10 @@ op_bumperRight    .whenReleased(new stopIntake(intake));
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
 
-//op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot"));
-//op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot"));
-//op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot"));
-//op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot"));
+op_yellowY.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "farShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_redB.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "nearShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_blueX.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchShot", shooter, vision, kickerWheel, swerveDrivetrain));
+op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTrenchRunShot", shooter, vision, kickerWheel, swerveDrivetrain));
 
 
 op_start.whenPressed(new adjustSerializer(serializer, Constants.SERIALIZERREGRESSIONDISTANCE).withTimeout(0.5));
@@ -311,6 +311,7 @@ blueButton.whenPressed(new runClimber(climber, 50000, false));
 blueButton.whenReleased(new runClimber(climber, 50000, true));
 */
 
+/*
 op_greenA.whenPressed(new activateClimber(climber, true));
 //op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
 op_greenA.whenReleased(new activateClimber(climber, false));
@@ -320,7 +321,7 @@ op_redB.whenReleased(new runClimber(climber, 177500, true));
 
 op_blueX.whenPressed(new runClimber(climber, 50000, false));
 op_blueX.whenReleased(new runClimber(climber, 50000, true));
-
+*/
 yellowButton.whenPressed(new runControlPanelMode(kickerWheel));
 yellowButton.whenReleased(new stopKicker(kickerWheel));
 
