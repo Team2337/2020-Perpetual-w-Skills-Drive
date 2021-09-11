@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Agitator.*;
+import frc.robot.commands.Climber.activateClimber;
+import frc.robot.commands.Climber.runClimber;
 import frc.robot.commands.Climber.runClimberJoystick;
 import frc.robot.commands.KickerWheel.runControlPanelMode;
 import frc.robot.commands.KickerWheel.stopKicker;
@@ -62,7 +64,6 @@ public class RobotContainer {
   public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
 
   public Pigeon pigeon = new Pigeon();
-  public SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
   public Intake intake = new Intake();
   public Agitator agitator = new Agitator();
   public Climber climber = new Climber();
@@ -71,6 +72,7 @@ public class RobotContainer {
   public Vision vision = new Vision();
   public Serializer serializer = new Serializer();
   public OperatorAngleAdjustment operatorAngleAdjustment = new OperatorAngleAdjustment();
+  public SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
   
   
   private final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -312,9 +314,9 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
-/*
+
 blackSwitch.whenPressed(new activateClimber(climber, true));
-blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing"));
+blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing", shooter, vision, kickerWheel, swerveDrivetrain));
 blackSwitch.whenReleased(new activateClimber(climber, false));
 
 blackButton.whenPressed(new runClimber(climber, 177500, false));
@@ -322,7 +324,7 @@ blackButton.whenReleased(new runClimber(climber, 177500, true));
 
 blueButton.whenPressed(new runClimber(climber, 50000, false));
 blueButton.whenReleased(new runClimber(climber, 50000, true));
-*/
+
 
 /*
 op_greenA.whenPressed(new activateClimber(climber, true));

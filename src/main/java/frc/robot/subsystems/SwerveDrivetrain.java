@@ -236,5 +236,14 @@ public class SwerveDrivetrain extends SubsystemBase {
   public void setFieldOriented(boolean state) {
     isFieldOriented = state;
   }
+  /**
+   * Gets the current field orientation mode
+   * (True: robot is field oriented | False: robot is robot oriented)
+   * @return - boolean value of current field orientation mode
+   */
+  public boolean getFieldOriented() {
+    return this.isFieldOriented;
+}
+
 
 }

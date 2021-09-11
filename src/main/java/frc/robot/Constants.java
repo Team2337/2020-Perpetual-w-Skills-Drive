@@ -67,6 +67,8 @@ public final class Constants {
     }
 
 
+
+
     // /2 since we're measuring from the center - halfway
     private static final double MODULE_DISTANCE_WIDTH_FROM_CENTER_INCHES = TRACK_WIDTH / 2;
     private static final double MODULE_DISTANCE_LENGTH_FROM_CENTER_INCHES = WHEEL_BASE / 2;
@@ -92,6 +94,23 @@ public final class Constants {
     private static final double REVOLUTION_PER_SECOND = MAX_INCHES_PER_SECOND / INCHES_PER_REVOLUTION;
     public static final double MAX_DEGREES_PER_SECOND = REVOLUTION_PER_SECOND * 360;
   }
+
+  public static final class Vision {
+    /******************/
+    /* -------------- */
+    /* --- VISION --- */
+    /* -------------- */
+    /******************/
+
+    /** P value for vision rotation */
+    public static double VISIONCLOSEROTATIONP = 2.5; 
+    public static double VISIONMIDDLEROTATIONP = 0.9; 
+    public static double VISIONOFFROTATIONP = 0.65; 
+    public static double VISIONFARROTATIONP = 0.85; 
+
+    public static double BALLTRACKINGP = 0.65;
+
+    }
 
   public static final int PIXY_CHIP_SELECT = 0;
   public static final int PIXY_ANALOG = 4; //MXP pin 3
@@ -330,13 +349,15 @@ public static final int PCM1 = 1;
     /******************/
 
     /** P value for vision rotation */
+
+    /*
     public static double VISIONCLOSEROTATIONP = 2.5; 
     public static double VISIONMIDDLEROTATIONP = 0.9; 
     public static double VISIONOFFROTATIONP = 0.65; 
     public static double VISIONFARROTATIONP = 0.85; 
 
     public static double BALLTRACKINGP = 0.65;
-
+*/
     public Constants() {
       KICKERSPEEDCLOSE = 7000; 
       KICKERSPEEDFAR = 5000; 
