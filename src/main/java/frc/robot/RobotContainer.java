@@ -85,7 +85,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand(swerveDrivetrain, driverController, operatorController));
+    //swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand(swerveDrivetrain, driverController, operatorController));
+    swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand2(swerveDrivetrain, driverController, operatorController, shooter, operatorAngleAdjustment, vision));
     climber.setDefaultCommand(new runClimberJoystick(climber, operatorController));
     serializer.setDefaultCommand(new serializerBallControl(serializer, agitator, shooter, driverController, operatorController));
   
@@ -189,8 +190,8 @@ public class RobotContainer {
     SmartDashboard.putData("AutonChooser", autonChooser);
     // SmartDashboard.putData("Reset Drive Encoder", new InstantCommand(() -> swerveDrivetrain.resetDriveEncoders())));
 */
-bumperLeft.whenPressed(new ChangeGyroAngleOffset(operatorAngleAdjustment, true));
-bumperLeft.whenReleased(new ChangeGyroAngleOffset(operatorAngleAdjustment, false));
+bumperLeft.whenPressed(new ChangeGyroAngleOffset(operatorAngleAdjustment, true, vision, pigeon));
+bumperLeft.whenReleased(new ChangeGyroAngleOffset(operatorAngleAdjustment, false, vision, pigeon));
 
 bumperRight.whenPressed(new runSerializer(serializer, Constants.SERIALIZERDRIVERFORWARDSPEED));
 bumperRight.whenReleased(new stopSerializer(serializer));
@@ -207,8 +208,8 @@ bumperRight.whenReleased(new stopSerializer(serializer));
 */
         /////////povUp.whenPressed(new ResetGyro(Pigeon));
 
-        back.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, true));
-        back.whenReleased(new ChangeVisionAngleOffset(operatorAngleAdjustment, false));
+        back.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, true, pigeon));
+        back.whenReleased(new ChangeVisionAngleOffset(operatorAngleAdjustment, false, pigeon));
 
         start.whenPressed(new setBallTracking(operatorAngleAdjustment, true));
         start.whenReleased(new setBallTracking(operatorAngleAdjustment, false));
@@ -340,7 +341,7 @@ op_blueX.whenReleased(new runClimber(climber, 50000, true));
 yellowButton.whenPressed(new runControlPanelMode(kickerWheel));
 yellowButton.whenReleased(new stopKicker(kickerWheel));
 
-blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, false));
+blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, false, pigeon));
 
 
 //YellowSwitch.whenPressed(new deployHyperLoop(Robot.Servo66));

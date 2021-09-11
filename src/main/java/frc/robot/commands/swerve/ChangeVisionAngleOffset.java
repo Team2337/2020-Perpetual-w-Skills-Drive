@@ -8,7 +8,9 @@
 package frc.robot.commands.swerve;
 
 import frc.robot.RobotContainer;
+import frc.robot.Constants.Vision;
 import frc.robot.subsystems.OperatorAngleAdjustment;
+import frc.robot.subsystems.Pigeon;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
@@ -21,6 +23,7 @@ public class ChangeVisionAngleOffset extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private RobotContainer robotContainer;
   private final OperatorAngleAdjustment OperatorAngleAdjustment;
+  private final Pigeon pigeon;
 
   private boolean isRotating;
 
@@ -29,8 +32,9 @@ public class ChangeVisionAngleOffset extends InstantCommand {
    * @param subsystem - OperatorAngleAdjustment Subsystem Object from Robot
    * @param isRotating - determines if the robot will be rotating when the button is pressed
    */
-  public ChangeVisionAngleOffset(OperatorAngleAdjustment operatorAngleAdjustment, boolean isRotating) {
+  public ChangeVisionAngleOffset(OperatorAngleAdjustment operatorAngleAdjustment, boolean isRotating, Pigeon pigeon) {
     this.OperatorAngleAdjustment = operatorAngleAdjustment;
+    this.pigeon = pigeon;
     this.isRotating = isRotating;
     addRequirements(operatorAngleAdjustment);
   }
@@ -45,7 +49,7 @@ public class ChangeVisionAngleOffset extends InstantCommand {
       // Robot.Vision.setLEDMode(1);
       OperatorAngleAdjustment.setLimelightRotationMode(false);
       //OperatorAngleAdjustment.setOffsetAngle(-Robot.Utilities.getPigeonYawMod());
-      OperatorAngleAdjustment.setOffsetAngle(-robotContainer.pigeon.getYawMod());
+      OperatorAngleAdjustment.setOffsetAngle(-pigeon.getYawMod());
     }
   }
 
