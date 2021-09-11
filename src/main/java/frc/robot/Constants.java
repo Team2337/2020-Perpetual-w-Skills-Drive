@@ -66,7 +66,7 @@ public final class Constants {
       }
     }
 
-
+    public static final double TICKSPERINCH = 1550;
 
 
     // /2 since we're measuring from the center - halfway
@@ -364,5 +364,10 @@ public static final int PCM1 = 1;
       KICKERSPEEDFRONTTRENCH = 4000;
 
     }
+
+    public static final class Auton {
+      public static final double INCHESTOJOYSTICKVALUE = 1;
+      public static final double AUTOSTRAFEP = 1.25;
+  }
 
 }

@@ -298,6 +298,10 @@ public class FXSwerveModule {
         driveMotor.setSelectedSensorPosition(0);
     }
 
+    public void setDriveEncoder(double position) {
+        driveMotor.setSelectedSensorPosition(position);
+    }
+
     public void resetAngleMotor() {
         setAngle(new Rotation2d(0));
     }
