@@ -86,7 +86,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     //swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand(swerveDrivetrain, driverController, operatorController));
-    swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand2(swerveDrivetrain, driverController, operatorController, shooter, operatorAngleAdjustment, vision));
+    swerveDrivetrain.setDefaultCommand(new SwerveDriveCommand2(swerveDrivetrain, driverController, operatorController, shooter, operatorAngleAdjustment, vision, pigeon));
     climber.setDefaultCommand(new runClimberJoystick(climber, operatorController));
     serializer.setDefaultCommand(new serializerBallControl(serializer, agitator, shooter, driverController, operatorController));
   
@@ -230,9 +230,9 @@ final JoystickButton op_rightStickButton = new JoystickButton(operatorController
 final Button op_TriggerLeft = new Button(() -> operatorController.getRawAxis(2) > .5);  //TODO: find the right axis and make sure it is positive. 
 final Button op_TriggerRight = new Button(() -> operatorController.getRawAxis(3) > -.5);  //TODO: find the right axis
 final POVButton op_povUp = new POVButton(operatorController, 0);
-final POVButton op_povLeft = new POVButton(operatorController, 90);
-final POVButton op_povRight = new POVButton(operatorController, 180);
-final POVButton op_povDown = new POVButton(operatorController, 270);
+final POVButton op_povLeft = new POVButton(operatorController, 270);
+final POVButton op_povRight = new POVButton(operatorController, 90);
+final POVButton op_povDown = new POVButton(operatorController, 180);
 
 
 
@@ -257,11 +257,15 @@ op_TriggerRight.whenReleased(new stopAgitator(agitator));
 
 
 
-op_bumperRight    .whenPressed(new runIntake(intake, -Constants.INTAKEFORWARDSPEED));
+op_bumperRight    .whenPressed(new runIntake(intake, Constants.INTAKEFORWARDSPEED));
 op_bumperRight    .whenReleased(new stopIntake(intake));
 
+op_bumperleft    .whenPressed(new runIntake(intake, Constants.INTAKEREVERSESPEED));
+op_bumperleft    .whenReleased(new stopIntake(intake));
+/*
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
+*/
 
 op_leftStickButton.whenPressed(new runSerializer(serializer, -Constants.SERIALIZEROPERATORFORWARDSPEED));
 op_leftStickButton.whenReleased(new stopSerializer(serializer));
@@ -279,7 +283,8 @@ op_greenA.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "frontTren
 op_povUp.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "0", shooter, vision, kickerWheel, swerveDrivetrain));
 op_povRight.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "90", shooter, vision, kickerWheel, swerveDrivetrain));
 op_povDown.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "180", shooter, vision, kickerWheel, swerveDrivetrain));
-op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "270", shooter, vision, kickerWheel, swerveDrivetrain));
+//op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "270", shooter, vision, kickerWheel, swerveDrivetrain));
+
 
 
 
@@ -316,9 +321,9 @@ final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxCon
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
 
-blackSwitch.whenPressed(new activateClimber(climber, true));
-blackSwitch.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing", shooter, vision, kickerWheel, swerveDrivetrain));
-blackSwitch.whenReleased(new activateClimber(climber, false));
+op_povLeft.whenPressed(new activateClimber(climber, true));
+op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing", shooter, vision, kickerWheel, swerveDrivetrain));
+op_povLeft.whenReleased(new activateClimber(climber, false));
 
 blackButton.whenPressed(new runClimber(climber, 177500, false));
 blackButton.whenReleased(new runClimber(climber, 177500, true));

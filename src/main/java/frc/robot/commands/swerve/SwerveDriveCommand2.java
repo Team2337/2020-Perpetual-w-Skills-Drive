@@ -1,9 +1,11 @@
 package frc.robot.commands.swerve;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Utilities;
 import frc.robot.commands.Vision.switchDriverCam;
 import frc.robot.subsystems.OperatorAngleAdjustment;
+import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.Vision;
@@ -28,13 +30,28 @@ public class SwerveDriveCommand2 extends CommandBase {
   private final OperatorAngleAdjustment operatorAngleAdjustment;
   private final Shooter shooter;
   private final Vision vision;
+  private final Pigeon pigeon;
+
+  private double rotation = 0;
+  private double error;
+  private double kP;
+  
+  /** Rotation value of the previous iteration */
+  private double lastRotation;
+  /** Deadband for the rotational input  */
+  private double rotationDeadband = 0.1;
+  /** Rotational P while not rotating */
+  private double stationaryP = 0.007;
+  /** Rotational P while rotating */
+  private double movingP = 0.002; //0.007
+
 
   /**
    * Command running the swerve calculations with the joystick
    *
    * @param subsystem - SwerveDrivetrain subsystem object
    */
-  public SwerveDriveCommand2(SwerveDrivetrain drivetrain, XboxController driverController, XboxController operatorController, Shooter shooter, OperatorAngleAdjustment operatorAngleAdjustment, Vision vision) {
+  public SwerveDriveCommand2(SwerveDrivetrain drivetrain, XboxController driverController, XboxController operatorController, Shooter shooter, OperatorAngleAdjustment operatorAngleAdjustment, Vision vision, Pigeon pigeon) {
     this.drivetrain = drivetrain;
     addRequirements(drivetrain);
 
@@ -43,6 +60,7 @@ public class SwerveDriveCommand2 extends CommandBase {
     this.shooter = shooter;
     this.vision = vision;
     this. operatorAngleAdjustment = operatorAngleAdjustment;
+    this.pigeon = pigeon;
   }
 
   @Override
@@ -57,17 +75,19 @@ public class SwerveDriveCommand2 extends CommandBase {
     // Inverting X values because we want positive values when we pull to the left.
     // Xbox controllers return positive values when you pull to the right by default.
     double strafe = -driverController.getX(Hand.kLeft); 
-    double rotation = -driverController.getX(Hand.kRight) * 0.34;
+
+    double rotation = -driverController.getX(Hand.kRight) * 0.34; 
+
     // Inverting the bumper value because we want field-oriented drive by default.
     //boolean isFieldOriented = !driverController.getBumper(Hand.kLeft);    ////Original////
     boolean isFieldOriented = drivetrain.getFieldOriented();
 
-
+    /*
     double speedLimit = .95;
     //if (operatorController.getTriggerAxis(Hand.kRight) > .5) {
       forward = forward * speedLimit;
       strafe = strafe * speedLimit;
-   // }
+   // } */
 
     //forward = Math.copySign(forward * forward, forward);
     //strafe = Math.copySign(strafe * strafe, strafe);
@@ -75,6 +95,34 @@ public class SwerveDriveCommand2 extends CommandBase {
     forward = Utilities.deadband(forward, 0.04);
     strafe = Utilities.deadband(strafe, 0.04);
     rotation = Utilities.deadband(rotation, 0.04);
+
+
+    if (Math.abs(rotation) > rotationDeadband) {
+      lastRotation = rotation;
+    } else {
+      // Checks to see if we were rotating in the previous iteration, but are not currently rotating 
+      if (Math.abs(lastRotation) > rotationDeadband && Math.abs(rotation) <= rotationDeadband) {
+        operatorAngleAdjustment.setOffsetAngle(pigeon.getYawMod());
+        rotation = 0;
+        lastRotation = rotation;
+      }
+      // Checks to see if the Driver's button is being pressed, and sets the current offset angle
+      if (operatorAngleAdjustment.getIsChangingGyroAngle()) {
+        operatorAngleAdjustment.setOffsetAngle(operatorAngleAdjustment.getFutureOffsetAngle());
+      }
+      // Sets the error of the robot's angle offset & current gyro angle 
+      error = operatorAngleAdjustment.getGyroAngleOffset() - pigeon.getYawMod();
+      kP = forward == 0 && strafe == 0 ? stationaryP : movingP;
+      if(error > 180) {
+        error -= 360;
+      } else if(error < -180) {
+        error += 360;
+      }
+      rotation = operatorAngleAdjustment.calculateGyroOffset(error, kP);
+      SmartDashboard.putNumber("Yaw Error", error);
+      SmartDashboard.putNumber("Rotation", rotation);
+    }
+
 
     if(operatorAngleAdjustment.getLimelightRotationMode()) {
       double tx = 0;

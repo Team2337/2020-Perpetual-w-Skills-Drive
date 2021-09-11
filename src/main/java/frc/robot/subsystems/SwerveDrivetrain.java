@@ -145,7 +145,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         vxMetersPerSecond,
         vyMetersPerSecond,
         omegaRadiansPerSecond,
-        Rotation2d.fromDegrees(pigeon.getYaw())
+        Rotation2d.fromDegrees(pigeon.getYawMod())
       );
     }
 

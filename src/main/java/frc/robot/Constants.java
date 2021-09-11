@@ -103,8 +103,8 @@ public final class Constants {
     /******************/
 
     /** P value for vision rotation */
-    public static double VISIONCLOSEROTATIONP = 2.5; 
-    public static double VISIONMIDDLEROTATIONP = 0.9; 
+    public static double VISIONCLOSEROTATIONP = 2; //2.5
+    public static double VISIONMIDDLEROTATIONP = 0.4; //0.9
     public static double VISIONOFFROTATIONP = 0.65; 
     public static double VISIONFARROTATIONP = 0.85; 
 

@@ -112,7 +112,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
     case "nearShot":
       futureOffsetAngle = nearShot;
       shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
-      vision.setRotateLimelight(false);
+      vision.setRotateLimelight(true); //changed at kettering scrimage
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
       vision.switchPipeLine(0);
       swerveDrivetrain.setFieldOriented(true);
@@ -121,7 +121,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
       futureOffsetAngle = climbing;
       vision.switchPipeLine(2);
       vision.setRotateLimelight(false);
-      swerveDrivetrain.setFieldOriented(false);
+      swerveDrivetrain.setFieldOriented(true); //changed at kettering scrimage
       break;
     case "targetLimelightOn":
     vision.setRotateLimelight(true);
@@ -319,5 +319,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("SlowRotate", getSlowRotateMode());
+    SmartDashboard.putBoolean("isChangingGyroAngle", isChangingGyroAngle);
+
   }
 }
