@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Agitator.*;
+import frc.robot.commands.auto.commandgroups.nineball.*;
 import frc.robot.commands.Climber.activateClimber;
 import frc.robot.commands.Climber.runClimber;
 import frc.robot.commands.Climber.runClimberJoystick;
@@ -75,7 +77,8 @@ public class RobotContainer {
   public SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
   
   
-  private final SendableChooser<Command> autonChooser = new SendableChooser<>();
+  private final SendableChooser<String> autonChooser = new SendableChooser<String>();
+  private final SendableChooser<String> delayChooser = new SendableChooser<String>();
 
 
   
@@ -100,6 +103,18 @@ public class RobotContainer {
 
     resetDrivetrain();
 
+    autonChooser.setDefaultOption("Do Nothing", "default");
+    autonChooser.addOption("9 Ball - Back Up Straight", "9 Ball - Back Up Straight");
+    autonChooser.addOption("9 Ball - Back Up - Turn 90", "9 Ball - Back Up - Turn 90");
+    autonChooser.addOption("9 Ball - Drive to Trench", "9 Ball - Drive to Trench");
+    autonChooser.addOption("6 Ball - Back Up Straight", "6 Ball - Back Up Straight");
+    autonChooser.addOption("6 Ball - Partner Left - 3 Trench", "6 Ball - Partner Left - 3 Trench");
+    autonChooser.addOption("6 Ball - Partner Right - 3 Trench", "6 Ball - Partner Right - 3 Trench");
+    autonChooser.addOption("3 Ball - Trench", "3 Ball - Trench");
+  }
+
+
+    /*
     autonChooser.setDefaultOption("Do Nothing", new WaitCommand(15));
     try { autonChooser.addOption("Barrel Racing", new BarrelRacing(swerveDrivetrain)); } catch (IOException e) { e.printStackTrace(); }
     try { autonChooser.addOption("Barrel Racing 2 (Centr)", new BarrelRacing2(swerveDrivetrain)); } catch (IOException e) { e.printStackTrace(); }
@@ -142,6 +157,8 @@ public class RobotContainer {
     try { autonChooser.addOption("CGGalatic Search Blue A", new CGGalaticSearchBlueA(swerveDrivetrain, intake)); } catch (IOException e) { e.printStackTrace(); }
     try { autonChooser.addOption("CGGalatic Search Blue B", new CGGalaticSearchBlueB(swerveDrivetrain, intake)); } catch (IOException e) { e.printStackTrace(); }
   }
+
+  */
 
   public void resetDrivetrain() {
     swerveDrivetrain.resetOdometry();
@@ -353,7 +370,113 @@ blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, fals
 //YellowSwitch.whenReleased(new retractHyperLoop(Robot.Servo66));
 
 
+delayChooser.setDefaultOption("0", "0");
+delayChooser.addOption("0.5", "0.5");
+delayChooser.addOption("1", "1");
+delayChooser.addOption("1.5", "1.5");
+delayChooser.addOption("2", "2");
+delayChooser.addOption("2.5", "2.5");
+delayChooser.addOption("3", "3");
+delayChooser.addOption("3.5", "3.5");
+delayChooser.addOption("4", "4");
+delayChooser.addOption("4.5", "4.5");
+delayChooser.addOption("5", "5");
+
+SmartDashboard.putData("AutonChooser", autonChooser);
+SmartDashboard.putData("DelayChooser", delayChooser);
+
   }
+
+  public double getDelay() {
+    double delay = 0;
+        switch (getDelayVariable()) {
+            case "0.5":
+            delay = 0.5;
+            break;
+            case "1":
+            delay = 1;
+            break;
+            case "1.5":
+            delay = 1.5;
+            break;
+            case "2":
+            delay = 2;
+            break;
+            case "2.5":
+            delay = 2.5;
+            break;
+            case "3":
+            delay = 3;
+            break;
+            case "3.5":
+            delay = 3.5;
+            break;
+            case "4":
+            delay = 4;
+            break;
+            case "4.5":
+            delay = 4.5;
+            break;
+            case "5":
+            delay = 5;
+            break;
+            default:
+            delay = 0;
+            break;
+        }
+        return delay;
+    }
+    
+    public Command getAutoCommand(double delay) {
+      Command autonomousCommand;
+    switch (getAutonomousCommand()) {
+      case "9 Ball - Back Up Straight":
+        autonomousCommand = new CenterGoal9Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+      case "9 Ball - Back Up - Turn 90":
+        autonomousCommand = new CenterGoal9BallTurn(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+      case "9 Ball - Drive to Trench":
+        autonomousCommand = new CenterGoal9BallTrench(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+      case "9 Ball - 3 Generator":
+        autonomousCommand = new CenterGoalBack9BallGenerator3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+        /*
+      case "6 Ball - Back Up Straight":
+        autonomousCommand = new CenterGoal6Ball(delay);
+        break;
+        */
+      case "6 Ball - 3 Generator":
+        autonomousCommand = new CenterGoalBack9BallGenerator3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+        /*
+      case "6 Ball - Partner Left - 3 Trench":
+        autonomousCommand = new CenterFeedLeftTRGrab3Score3(delay);
+        break;
+      case "6 Ball - Partner Right - 3 Trench":
+        autonomousCommand = new CenterFeedRightTRGrab3Score3(delay);
+        break;
+      case "6 Ball - Partner Left - 3 Trench - 2 Generator":
+        autonomousCommand = new CenterFeedLeftTRGrab3GenRGrab2Score5(delay);
+        break;
+      case "6 Ball - Partner Right - 3 Trench - 2 Generator":
+        autonomousCommand = new CenterFeedRightTRGrab3GenRGrab2Score5(delay);
+        break;        
+      case "3 Ball - Trench":
+        autonomousCommand = new CenterTRGrab3Score3(delay);
+        break;
+      case "3 Ball - Back Up":
+        autonomousCommand = new CenterGoal3Ball(delay);
+        break;
+        */
+      default:
+        autonomousCommand = new WaitCommand(15).withTimeout(15);
+        break;
+      
+    }
+      return autonomousCommand;
+    }
 
 
   /**
@@ -361,8 +484,18 @@ blueSwitch.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, fals
    *
    * @return the command to run in autonomous
    */
+  /*
   public Command getAutonomousCommand() {
     return autonChooser.getSelected();
+  }
+  */
+
+  public String getAutonomousCommand() {
+    return autonChooser.getSelected();
+  }
+
+  public String getDelayVariable() {
+    return delayChooser.getSelected();
   }
 
   public boolean getOpRightY() {

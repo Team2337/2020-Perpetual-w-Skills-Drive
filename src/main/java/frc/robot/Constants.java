@@ -66,7 +66,7 @@ public final class Constants {
       }
     }
 
-
+    public static final double TICKSPERINCH = 1550;
 
 
     // /2 since we're measuring from the center - halfway

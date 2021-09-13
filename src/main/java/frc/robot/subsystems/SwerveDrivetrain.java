@@ -145,7 +145,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         vxMetersPerSecond,
         vyMetersPerSecond,
         omegaRadiansPerSecond,
-        Rotation2d.fromDegrees(pigeon.getYawMod())
+        Rotation2d.fromDegrees(pigeon.getYaw())
       );
     }
 
@@ -219,6 +219,12 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
   }
 
+  public double getModulePosition(int modulenum) {
+    FXSwerveModule module = modules[modulenum];
+    return module.getDriveMotorPosition();
+
+  }
+
   @Override
   public void periodic() {
     odometry.update(Rotation2d.fromDegrees(pigeon.getYaw()), modules[0].getState(), modules[1].getState(), modules[2].getState(), modules[3].getState());
@@ -244,6 +250,24 @@ public class SwerveDrivetrain extends SubsystemBase {
   public boolean getFieldOriented() {
     return this.isFieldOriented;
 }
+
+  /**
+   * Sets the drive encoders for each module
+   */
+  public void setAllModuleDriveEncoders(int position) {
+    // Goes through 4 times and sets the drive encoders 
+    for(int i = 0; i < 4; i++) {
+      FXSwerveModule module = modules[i];
+      module.setDriveEncoder(position);
+    }
+  }
+  
+  /**
+   * Zeros all of the drive encoders
+   */
+  public void zeroAllDriveEncoders() {
+    setAllModuleDriveEncoders(0);
+  }
 
 
 }

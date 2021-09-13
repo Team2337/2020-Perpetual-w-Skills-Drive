@@ -1,7 +1,10 @@
 package frc.robot;
 
+import frc.robot.subsystems.Pigeon;
+
 /**
  * Utilities class to house basic methods that can be used across subsystems
+ * 
  * @author Bryce G.
  */
 public class Utilities {
@@ -15,6 +18,31 @@ public class Utilities {
     public static double deadband(double input, double deadband) {
       if (Math.abs(input) < deadband) return 0;
 		  return Math.copySign((Math.abs(input) - deadband) / (1 - deadband), input);
+    }
+
+            /**
+     * Gets the yaw of the gyro device being used
+     * @param gyroType - String value for the gyro being used (pigeon: "pigeon" | navx: "navx")
+     * @return - yaw from the gyro
+     */
+    public double getYaw(String gyroType, Pigeon pigeon) {
+      switch(gyroType) {
+          case "pigeon":
+            return pigeon.getYaw();
+          case "navx":
+            // return Robot.navx.getYaw();
+          default:
+          return 0;
+      }
+    }
+
+
+        /**
+     * Gets the yaw value from the Pigeon between -360 & +360
+     * @return - gyro double value between -360 & +360
+     */
+    public double getPigeonYawMod(Pigeon pigeon) {
+      return getYaw("pigeon", pigeon) % 360;
     }
 
     /**

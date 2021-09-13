@@ -113,7 +113,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    autonomousCommand = robotContainer.getAutonomousCommand();
+
+    double delay = robotContainer.getDelay();
+
+    autonomousCommand = robotContainer.getAutoCommand(delay);
+   // autonomousCommand = robotContainer.getAutonomousCommand();
 
     robotContainer.resetDrivetrain();
     
