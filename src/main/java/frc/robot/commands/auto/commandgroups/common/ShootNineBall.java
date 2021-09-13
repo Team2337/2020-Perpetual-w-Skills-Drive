@@ -2,7 +2,12 @@ package frc.robot.commands.auto.commandgroups.common;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Robot;
+import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Serializer;
+import frc.robot.subsystems.OperatorAngleAdjustment;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.KickerWheel;
 import frc.robot.commands.Shooter.stopShooter;
 import frc.robot.commands.auto.checkShooterVelocity;
 import frc.robot.commands.auto.commandgroups.common.systemactions.*;
@@ -13,17 +18,29 @@ import frc.robot.commands.auto.commandgroups.common.systemactions.*;
  * @category AUTON 
  */
 public class ShootNineBall extends SequentialCommandGroup {
+  private final Agitator m_agitator;
+  private final Intake m_intake;
+  private final Serializer m_serializer;
+  private final OperatorAngleAdjustment m_operatorAngleAdjustment;
+  private final KickerWheel m_kickerWheel;
+  private final Shooter m_shooter;
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
  /**
  * Starts the shooter and when when the velocity of the shooter is reached run feed shooter until 9 balls have been shot then turn off the shooter command group
  */
-  public ShootNineBall() {
+  public ShootNineBall(OperatorAngleAdjustment operatorAngleAdjustment, Intake intake, Agitator agitator, Serializer serializer, Shooter shooter, KickerWheel kickerWheel) {
+    m_operatorAngleAdjustment = operatorAngleAdjustment;
+    m_agitator = agitator;
+    m_intake = intake;
+    m_serializer = serializer;
+    m_shooter = shooter;
+    m_kickerWheel = kickerWheel;
     addCommands(
-     new StartShooter(),
-     new checkShooterVelocity(Robot.Serializer, Constants.SHOOTSPEEDCLOSE, Constants.KICKERSPEEDCLOSE).withTimeout(3),
-     new FeedShooter(9).withTimeout(10),
-     new stopShooter(Robot.Shooter)
+     new StartShooter(m_shooter, m_kickerWheel),
+     new checkShooterVelocity(m_serializer, Constants.SHOOTSPEEDCLOSE, Constants.KICKERSPEEDCLOSE, m_kickerWheel, m_shooter).withTimeout(3),
+     new FeedShooter(9, m_operatorAngleAdjustment, m_intake, m_agitator, m_serializer).withTimeout(10),
+     new stopShooter(m_shooter)
     );
   
   }

@@ -3,7 +3,6 @@ package frc.robot.commands.auto.commandgroups.common.systemactions;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.commands.Agitator.runAgitator;
 import frc.robot.commands.intake.runIntake;
 import frc.robot.subsystems.Agitator;
@@ -20,24 +19,24 @@ import frc.robot.commands.auto.autoBallCounter;
  */
 public class FeedShooter extends ParallelCommandGroup {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final OperatorAngleAdjustment operatorAngleAdjustment;
-  private final Intake intake;
-  private final Agitator agitator;
-  private final Serializer serializer;
+  private final Agitator m_agitator;
+  private final Intake m_intake;
+  private final Serializer m_serializer;
+  private final OperatorAngleAdjustment m_operatorAngleAdjustment;
 
  /**
  * Runs the serializer, agitator, and the intake command group
  */
   public FeedShooter(int ballsShot, OperatorAngleAdjustment operatorAngleAdjustment, Intake intake, Agitator agitator, Serializer serializer) {
-    this.operatorAngleAdjustment = operatorAngleAdjustment;
-    this.agitator = agitator;
-    this.intake = intake;
-    this.serializer = serializer;
+    m_operatorAngleAdjustment = operatorAngleAdjustment;
+    m_agitator = agitator;
+    m_intake = intake;
+    m_serializer = serializer;
     parallel(
-    new autoBallCounter(operatorAngleAdjustment, new DigitalInput(0), 10, ballsShot),
-    new runSerializer(serializer, Constants.SERIALIZERDRIVERFORWARDSPEED),
-    new runAgitator(agitator, Constants.AGITATORSPEED),
-    new runIntake(intake, Constants.INTAKEFORWARDSPEED)
+    new autoBallCounter(m_operatorAngleAdjustment, new DigitalInput(0), 10, ballsShot),
+    new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED),
+    new runAgitator(m_agitator, Constants.AGITATORSPEED),
+    new runIntake(m_intake, Constants.INTAKEFORWARDSPEED)
     );  
   }
 

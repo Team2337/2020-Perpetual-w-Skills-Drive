@@ -1,9 +1,11 @@
 package frc.robot.commands.auto.commandgroups.common.systemactions;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
+import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Serializer;
 import frc.robot.commands.Agitator.runAgitator;
-import frc.robot.commands.Intake.runIntake;
+import frc.robot.commands.intake.runIntake;
 import frc.robot.commands.Serializer.runSerializer;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -15,13 +17,19 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  * @author Bryce G.
  */
 public class IntakeAndFireFromPartners extends SequentialCommandGroup {
+    private final Agitator m_agitator;
+    private final Intake m_intake;
+    private final Serializer m_serializer;
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    public IntakeAndFireFromPartners(double timeout) {
+    public IntakeAndFireFromPartners(double timeout,  Intake intake, Agitator agitator, Serializer serializer) {
+        m_agitator = agitator;
+        m_intake = intake;
+        m_serializer = serializer;
         addCommands(
             new WaitCommand(0.5),
-            new runIntake(Robot.Intake, Constants.INTAKEFORWARDSPEED), 
-            new runSerializer(Robot.Serializer, Constants.SERIALIZERDRIVERFORWARDSPEED),
-            new runAgitator(Robot.Agitator, Constants.AGITATORSPEED),
+            new runIntake(m_intake, Constants.INTAKEFORWARDSPEED), 
+            new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED),
+            new runAgitator(m_agitator, Constants.AGITATORSPEED),
             new WaitCommand(timeout).withTimeout(timeout)
         );
     }

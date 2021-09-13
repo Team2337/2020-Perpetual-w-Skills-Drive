@@ -4,11 +4,14 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9Ball;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTrench;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTurn;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoalBack9BallGenerator3Ball;
 import frc.robot.subsystems.PixyCam2Wire;
 
 
@@ -113,7 +116,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    autonomousCommand = robotContainer.getAutonomousCommand();
+
+    double delay = robotContainer.getDelay();
+
+    autonomousCommand = robotContainer.getAutoCommand(delay);
+   // autonomousCommand = robotContainer.getAutonomousCommand();
 
     robotContainer.resetDrivetrain();
     
@@ -158,7 +165,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {}
 
   public void smartDashboardPrints() {
-    SmartDashboard.putBoolean("Logger", Logger);
+    //SmartDashboard.putBoolean("Logger", Logger);
   }
 }
 
