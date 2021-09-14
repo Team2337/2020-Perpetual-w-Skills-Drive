@@ -311,15 +311,15 @@ public static final int PCM1 = 1;
     /**********************/
 
     /** Maximum speed of the serializer */
-    public static double SERIALIZERPEAKSPEED = 0.4;
+    public static double SERIALIZERPEAKSPEED = 0.4; // .4
 
     /** Percent speed on the serializer when moving to positions */
     public static double SERIALIZERPOSITIONSPEED = 0.2;
 
     /** Percent forward speed when serializing or shooting */
-    public static double SERIALIZERDRIVERFORWARDSPEED = 0.25;
+    public static double SERIALIZERDRIVERFORWARDSPEED = 0.4; // 0.25
     
-    public static double SERIALIZEROPERATORFORWARDSPEED = 0.3;
+    public static double SERIALIZEROPERATORFORWARDSPEED = 0.4;  //0.3
     /** Percent reverse speed when serializing or shooting */
     public static double SERIALIZERREVERSESPEED = -0.3;
     

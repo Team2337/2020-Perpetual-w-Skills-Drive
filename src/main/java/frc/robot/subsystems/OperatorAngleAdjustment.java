@@ -121,7 +121,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
       futureOffsetAngle = climbing;
       vision.switchPipeLine(2);
       vision.setRotateLimelight(false);
-      swerveDrivetrain.setFieldOriented(true); //changed at kettering scrimage
+      swerveDrivetrain.setFieldOriented(false); //changed at kettering scrimage.changed back at premier after\
       break;
     case "targetLimelightOn":
     vision.setRotateLimelight(true);

@@ -62,7 +62,6 @@ public class serializerBallControl extends CommandBase {
             }
             // If the driver isn't attempting to control it and the operator is
         } else if (operatorController.getRawAxis(2) > .5) { //Operator joystick left trigger
-            agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             if(serializer.bottomSerializerSensor.get() && !serializer.topSerializerSensor.get()) {
                 if(iteration > 5 && iteration < 9) { 
                     position = serializer.getSerializerPosition() + 7400;
@@ -80,6 +79,8 @@ public class serializerBallControl extends CommandBase {
             }  
             if(serializer.topSerializerSensor.get()){
                 agitator.stopAgitator();
+            } else {
+                agitator.setAgitatorSpeed(Constants.AGITATORSPEED);
             }
             
         } else {
