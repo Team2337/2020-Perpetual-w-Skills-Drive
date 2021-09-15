@@ -4,49 +4,61 @@
 
 package frc.robot;
 
-import java.io.IOException;
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.Agitator.*;
-import frc.robot.commands.auto.commandgroups.nineball.*;
+import frc.robot.commands.Agitator.runAgitator;
+import frc.robot.commands.Agitator.stopAgitator;
 import frc.robot.commands.Climber.activateClimber;
 import frc.robot.commands.Climber.runClimber;
 import frc.robot.commands.Climber.runClimberJoystick;
 import frc.robot.commands.KickerWheel.runControlPanelMode;
 import frc.robot.commands.KickerWheel.stopKicker;
-import frc.robot.commands.Serializer.*;
+import frc.robot.commands.Serializer.adjustSerializer;
+import frc.robot.commands.Serializer.runSerializer;
+import frc.robot.commands.Serializer.serializerBallControl;
+import frc.robot.commands.Serializer.stopSerializer;
 import frc.robot.commands.Shooter.stopShooter;
-import frc.robot.commands.ShooterSystem.*;
-import frc.robot.commands.Vision.*;
-import frc.robot.commands.auto.GalacticSearch;
-import frc.robot.commands.auto.LPathTrajectory;
-import frc.robot.commands.auto.MotionMagicCommand;
-import frc.robot.commands.auto.calibration.StraightLineTest10Ft;
-import frc.robot.commands.auto.calibration.StraightLineTest10Ft0;
-import frc.robot.commands.auto.calibration.StraightLineTest10Ft1;
-import frc.robot.commands.commandgroups.CGGalaticSearchBlueA;
-import frc.robot.commands.commandgroups.CGGalaticSearchBlueB;
-import frc.robot.commands.commandgroups.CGGalaticSearchRedA;
-import frc.robot.commands.commandgroups.CGGalaticSearchRedB;
-import frc.robot.commands.auto.autonav.BarrelRacing;
-import frc.robot.commands.auto.autonav.BarrelRacing2;
-import frc.robot.commands.auto.autonav.Bounce;
-import frc.robot.commands.auto.autonav.Slalom;
-import frc.robot.commands.auto.autonav.Slalom2;
-import frc.robot.commands.swerve.*;
-import frc.robot.commands.intake.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.ShooterSystem.shooterSystemOff;
+import frc.robot.commands.ShooterSystem.shooterSystemOn;
+import frc.robot.commands.Vision.limeLightLEDOff;
+import frc.robot.commands.Vision.limeLightLEDOn;
+import frc.robot.commands.Vision.setBallTracking;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9Ball;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTrench;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTurn;
+import frc.robot.commands.auto.commandgroups.nineball.CenterGoalBack9BallGenerator3Ball;
+import frc.robot.commands.auto.commandgroups.sixball.CenterFeedLeftTRGrab3GenRGrab2Score5;
+import frc.robot.commands.auto.commandgroups.sixball.CenterFeedLeftTRGrab3Score3;
+import frc.robot.commands.auto.commandgroups.sixball.CenterFeedRightTRGrab3GenRGrab2Score5;
+import frc.robot.commands.auto.commandgroups.sixball.CenterFeedRightTRGrab3Score3;
+import frc.robot.commands.auto.commandgroups.sixball.CenterGoal6Ball;
+import frc.robot.commands.auto.commandgroups.threeball.CenterGoal3Ball;
+import frc.robot.commands.auto.commandgroups.threeball.CenterTRGrab3Score3;
+import frc.robot.commands.intake.runIntake;
+import frc.robot.commands.intake.stopIntake;
+import frc.robot.commands.swerve.ChangeGyroAngleOffset;
+import frc.robot.commands.swerve.ChangeVisionAngleOffset;
+import frc.robot.commands.swerve.SetGyroAngleOffset;
+import frc.robot.commands.swerve.SwerveDriveCommand2;
+import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.KickerWheel;
+import frc.robot.subsystems.OperatorAngleAdjustment;
+import frc.robot.subsystems.Pigeon;
+import frc.robot.subsystems.PixyCam2Wire;
+import frc.robot.subsystems.Serializer;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.Vision;
 
 
 /**
@@ -442,34 +454,30 @@ SmartDashboard.putData("DelayChooser", delayChooser);
       case "9 Ball - 3 Generator":
         autonomousCommand = new CenterGoalBack9BallGenerator3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
-        /*
       case "6 Ball - Back Up Straight":
-        autonomousCommand = new CenterGoal6Ball(delay);
+        autonomousCommand = new CenterGoal6Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
-        */
       case "6 Ball - 3 Generator":
         autonomousCommand = new CenterGoalBack9BallGenerator3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
-        /*
       case "6 Ball - Partner Left - 3 Trench":
-        autonomousCommand = new CenterFeedLeftTRGrab3Score3(delay);
+        autonomousCommand = new CenterFeedLeftTRGrab3Score3(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       case "6 Ball - Partner Right - 3 Trench":
-        autonomousCommand = new CenterFeedRightTRGrab3Score3(delay);
+        autonomousCommand = new CenterFeedRightTRGrab3Score3(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       case "6 Ball - Partner Left - 3 Trench - 2 Generator":
-        autonomousCommand = new CenterFeedLeftTRGrab3GenRGrab2Score5(delay);
+        autonomousCommand = new CenterFeedLeftTRGrab3GenRGrab2Score5(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       case "6 Ball - Partner Right - 3 Trench - 2 Generator":
-        autonomousCommand = new CenterFeedRightTRGrab3GenRGrab2Score5(delay);
+        autonomousCommand = new CenterFeedRightTRGrab3GenRGrab2Score5(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;        
       case "3 Ball - Trench":
-        autonomousCommand = new CenterTRGrab3Score3(delay);
+        autonomousCommand = new CenterTRGrab3Score3(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       case "3 Ball - Back Up":
-        autonomousCommand = new CenterGoal3Ball(delay);
+        autonomousCommand = new CenterGoal3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
-        */
       default:
         autonomousCommand = new WaitCommand(15).withTimeout(15);
         break;

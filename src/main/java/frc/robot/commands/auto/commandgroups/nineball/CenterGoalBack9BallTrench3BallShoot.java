@@ -1,18 +1,17 @@
 package frc.robot.commands.auto.commandgroups.nineball;
 
-import frc.robot.commands.auto.commandgroups.common.movement.*;
-import frc.robot.commands.auto.commandgroups.common.*;
-import frc.robot.commands.auto.commandgroups.common.systemactions.*;
-import frc.robot.commands.auto.commandgroups.common.vision.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.auto.commandgroups.common.ShootNineBall;
+import frc.robot.commands.auto.commandgroups.common.Trench6BallPartnerMoves;
+import frc.robot.commands.auto.commandgroups.common.vision.Vision3ShootBall;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Serializer;
-import frc.robot.subsystems.OperatorAngleAdjustment;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.KickerWheel;
-import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Pigeon;
+import frc.robot.subsystems.Serializer;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.Vision;
 
 /**

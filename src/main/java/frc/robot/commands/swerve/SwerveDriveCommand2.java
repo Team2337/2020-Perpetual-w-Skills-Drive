@@ -1,19 +1,16 @@
 package frc.robot.commands.swerve;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.Utilities;
-import frc.robot.commands.Vision.switchDriverCam;
 import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  * Command running the swerve calculations with the joystick

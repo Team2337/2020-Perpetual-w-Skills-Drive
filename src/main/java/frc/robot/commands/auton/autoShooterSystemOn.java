@@ -1,20 +1,19 @@
 package frc.robot.commands.auton;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.commands.Agitator.runAgitator;
-import frc.robot.commands.intake.runIntake;
 import frc.robot.commands.KickerWheel.runKicker;
 import frc.robot.commands.Serializer.runSerializer;
 import frc.robot.commands.auto.autoStartShooter;
+import frc.robot.commands.intake.runIntake;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.KickerWheel;
 import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Serializer;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * Nine ball auto

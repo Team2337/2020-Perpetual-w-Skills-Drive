@@ -1,9 +1,9 @@
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.KickerWheel;
 import frc.robot.subsystems.Serializer;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * Sets the module angles to the desired rotation angle and rotates the robot a specified direction, either left or right

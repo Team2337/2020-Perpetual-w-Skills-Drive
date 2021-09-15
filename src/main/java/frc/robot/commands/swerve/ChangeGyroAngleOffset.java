@@ -7,7 +7,6 @@
 
 package frc.robot.commands.swerve;
 
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Vision;
@@ -22,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class ChangeGyroAngleOffset extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final OperatorAngleAdjustment OperatorAngleAdjustment;
-  private RobotContainer robotContainer;
   private final Vision vision;
   private final Pigeon pigeon;
   private boolean isRotating;

@@ -1,27 +1,17 @@
 package frc.robot.commands.auto.commandgroups.common.movement;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.auto.AutoDriveWithJoystickInput;
+import frc.robot.commands.auto.resetDriveEncoders;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Serializer;
-import frc.robot.subsystems.OperatorAngleAdjustment;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.KickerWheel;
-import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Pigeon;
+import frc.robot.subsystems.Serializer;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.intake.runIntake;
-import frc.robot.commands.KickerWheel.runKicker;
-import frc.robot.commands.Serializer.runSerializer;
-import frc.robot.commands.Shooter.startShooter;
-import frc.robot.commands.auto.AutoDriveWithJoystickInput;
-import frc.robot.commands.auto.AutoRotateWithJoystickInput;
-import frc.robot.commands.auto.AutoRotateWithVision;
-import frc.robot.commands.auto.autoStartShooter;
-import frc.robot.commands.auto.resetDriveEncoders;
-import frc.robot.commands.auto.zeroAngleEncoders;
 
 /**
  * Drives from the initiation line to the generator command group

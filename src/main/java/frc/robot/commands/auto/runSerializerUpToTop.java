@@ -1,8 +1,7 @@
 package frc.robot.commands.auto;
 
-import frc.robot.Robot;
-import frc.robot.subsystems.Serializer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Serializer;
 
 /**
  * Sets the serializer speed

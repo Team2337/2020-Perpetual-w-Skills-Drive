@@ -7,11 +7,9 @@
 
 package frc.robot.commands.swerve;
 
-import frc.robot.RobotContainer;
-import frc.robot.Constants.Vision;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.OperatorAngleAdjustment;
 import frc.robot.subsystems.Pigeon;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * Sets the robot's angle offset. This should be on the <b>DRIVER</b> joystick
@@ -21,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  */
 public class ChangeVisionAngleOffset extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private RobotContainer robotContainer;
   private final OperatorAngleAdjustment OperatorAngleAdjustment;
   private final Pigeon pigeon;
 
