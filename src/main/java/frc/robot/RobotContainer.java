@@ -20,6 +20,7 @@ import frc.robot.commands.Climber.activateClimber;
 import frc.robot.commands.Climber.runClimber;
 import frc.robot.commands.Climber.runClimberJoystick;
 import frc.robot.commands.KickerWheel.runControlPanelMode;
+import frc.robot.commands.KickerWheel.runKicker;
 import frc.robot.commands.KickerWheel.stopKicker;
 import frc.robot.commands.Serializer.adjustSerializer;
 import frc.robot.commands.Serializer.runSerializer;
@@ -31,6 +32,7 @@ import frc.robot.commands.ShooterSystem.shooterSystemOn;
 import frc.robot.commands.Vision.limeLightLEDOff;
 import frc.robot.commands.Vision.limeLightLEDOn;
 import frc.robot.commands.Vision.setBallTracking;
+import frc.robot.commands.auto.AutoStrafeWithPixy;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9Ball;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTrench;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTurn;
@@ -349,10 +351,12 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
-
+/*
 op_povLeft.whenPressed(new activateClimber(climber, true));
 op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing", shooter, vision, kickerWheel, swerveDrivetrain));
-op_povLeft.whenReleased(new activateClimber(climber, false));
+op_povLeft.whenReleased(new activateClimber(climber, false)); */
+
+op_povLeft.whenPressed(new runControlPanelMode(kickerWheel));
 
 blackButton.whenPressed(new runClimber(climber, 177500, false));
 blackButton.whenReleased(new runClimber(climber, 177500, true));

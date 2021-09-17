@@ -46,7 +46,7 @@ public class AutoDriveWithJoystickInput extends CommandBase {
     this.operatorAngleAdjustment = operatorAngleAdjustment;
     this.encoderDist = encoderDist;
     this.forwardDist = forwardDist;
-    this.strafe = horizontalDist * Constants.Auton.INCHESTOJOYSTICKVALUE;
+    this.strafe = -horizontalDist * Constants.Auton.INCHESTOJOYSTICKVALUE;
     this.forward = forwardDist * Constants.Auton.INCHESTOJOYSTICKVALUE;
     this.endAngleDegree = endAngleDegree;
     addRequirements(swerveDrivetrain);
@@ -59,7 +59,7 @@ public class AutoDriveWithJoystickInput extends CommandBase {
 
   @Override
   public void execute() {
-    currentGyro = -Robot.Utilities.getPigeonYawMod(pigeon);
+    currentGyro = Robot.Utilities.getPigeonYawMod(pigeon);
     rotationError = (endAngleDegree - currentGyro);
     rotation = rotationError * rotationP;
     rotation = rotation > maxRotationSpeed ? maxRotationSpeed : rotation;
@@ -70,7 +70,7 @@ public class AutoDriveWithJoystickInput extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    operatorAngleAdjustment.setOffsetAngle(-Robot.Utilities.getPigeonYawMod(pigeon));
+    operatorAngleAdjustment.setOffsetAngle(Robot.Utilities.getPigeonYawMod(pigeon));
     //System.out.println("Encoder Ticks: " + SwerveDrivetrain.getModule(3).getDriveEncoderValue());
     swerveDrivetrain.zeroAllDriveEncoders();
 

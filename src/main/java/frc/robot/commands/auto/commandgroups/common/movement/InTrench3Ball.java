@@ -55,7 +55,7 @@ public class InTrench3Ball extends ParallelCommandGroup {
     }
 
     addCommands(
-        new AutoStrafeWithPixy(m_swerveDrivetrain, driveDistance, speed, ThirdDrive.robotAngle),
+        new AutoStrafeWithPixy(m_swerveDrivetrain, driveDistance, speed, ThirdDrive.robotAngle, vision, operatorAngleAdjustment, pigeon),
         new runIntake(m_intake, Constants.INTAKEFORWARDSPEED),
         new runAgitator(m_agitator, Constants.AGITATORSPEED),
         new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHSPEED).andThen(new runKicker(m_kickerWheel)))
