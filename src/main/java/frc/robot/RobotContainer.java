@@ -351,12 +351,11 @@ final JoystickButton blueSwitch = new JoystickButton(operatorControls, XboxContr
 final JoystickButton yellowButton = new JoystickButton(operatorControls, XboxController.Button.kStart.value);
 final JoystickButton yellowSwitch = new JoystickButton(operatorControls, XboxController.Button.kY.value);
 
-/*
+
 op_povLeft.whenPressed(new activateClimber(climber, true));
 op_povLeft.whenPressed(new SetGyroAngleOffset(operatorAngleAdjustment, "climbing", shooter, vision, kickerWheel, swerveDrivetrain));
-op_povLeft.whenReleased(new activateClimber(climber, false)); */
+op_povLeft.whenReleased(new activateClimber(climber, false)); 
 
-op_povLeft.whenPressed(new runControlPanelMode(kickerWheel));
 
 blackButton.whenPressed(new runClimber(climber, 177500, false));
 blackButton.whenReleased(new runClimber(climber, 177500, true));

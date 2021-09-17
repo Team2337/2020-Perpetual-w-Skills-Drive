@@ -89,6 +89,8 @@ public class KickerWheel extends SubsystemBase {
       SmartDashboard.putNumber("Kicker Temperature", getKickerTemperature());
     }
     SmartDashboard.putNumber("Kicker wheel velocity", getKickerSpeed());
+    SmartDashboard.putNumber("getFutureSpeed", getFutureSpeed());
+
   }
 
   /**

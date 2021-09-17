@@ -333,12 +333,12 @@ public static final int PCM1 = 1;
     /******************/
     
     /** Kicker wheel velocity for the far shot */
-    public static int KICKERSPEEDFAR;
+    public static int KICKERSPEEDFAR = 5000;
 
     /** Kicker wheel velocity for the near shot */
-    public static int KICKERSPEEDCLOSE;
+    public static int KICKERSPEEDCLOSE = 7000;
 
-    public static int KICKERSPEEDFRONTTRENCH;
+    public static int KICKERSPEEDFRONTTRENCH = 4000;
 
     public static double KICKERCONTROLPANELSPEED = 12000;
 
@@ -359,9 +359,9 @@ public static final int PCM1 = 1;
     public static double BALLTRACKINGP = 0.65;
 */
     public Constants() {
-      KICKERSPEEDCLOSE = 7000; 
-      KICKERSPEEDFAR = 5000; 
-      KICKERSPEEDFRONTTRENCH = 4000;
+      //KICKERSPEEDCLOSE = 7000; 
+      //KICKERSPEEDFAR = 5000; 
+      //KICKERSPEEDFRONTTRENCH = 4000;
 
     }
     public static final class Auton {
