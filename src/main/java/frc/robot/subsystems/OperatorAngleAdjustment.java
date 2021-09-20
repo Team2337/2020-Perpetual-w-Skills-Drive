@@ -112,7 +112,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
     case "nearShot":
       futureOffsetAngle = nearShot;
       shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
-      vision.setRotateLimelight(true); //changed at kettering scrimage
+      vision.setRotateLimelight(false); //changed at kettering scrimage
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
       vision.switchPipeLine(0);
       swerveDrivetrain.setFieldOriented(true);

@@ -49,7 +49,7 @@ public class AutoRotateWithJoystickInput extends CommandBase {
 
   @Override
   public void execute() {
-    currentGyro = -Robot.Utilities.getPigeonYawMod(pigeon);
+    currentGyro = Robot.Utilities.getPigeonYawMod(pigeon);
     rotationError = (endAngleDegree - currentGyro);
     rotation = rotationError * rotationP;
     rotation = rotation > maxRotationSpeed ? maxRotationSpeed : rotation;
@@ -60,12 +60,12 @@ public class AutoRotateWithJoystickInput extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    operatorAngleAdjustment.setOffsetAngle(-Robot.Utilities.getPigeonYawMod(pigeon));
+    operatorAngleAdjustment.setOffsetAngle(Robot.Utilities.getPigeonYawMod(pigeon));
 
   }
 
   @Override
   public boolean isFinished() {
-    return Robot.Utilities.withinTolerance(endAngleDegree, -Robot.Utilities.getPigeonYawMod(pigeon), 2);
+    return Robot.Utilities.withinTolerance(endAngleDegree, Robot.Utilities.getPigeonYawMod(pigeon), 2);
   }
 }

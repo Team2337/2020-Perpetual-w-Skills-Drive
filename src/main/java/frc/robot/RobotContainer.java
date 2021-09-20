@@ -48,8 +48,10 @@ import frc.robot.commands.intake.runIntake;
 import frc.robot.commands.intake.stopIntake;
 import frc.robot.commands.swerve.ChangeGyroAngleOffset;
 import frc.robot.commands.swerve.ChangeVisionAngleOffset;
+import frc.robot.commands.swerve.ResetGyro;
 import frc.robot.commands.swerve.SetGyroAngleOffset;
 import frc.robot.commands.swerve.SwerveDriveCommand2;
+import frc.robot.commands.swerve.setSlowRotateMode;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -125,6 +127,8 @@ public class RobotContainer {
     autonChooser.addOption("6 Ball - Partner Left - 3 Trench", "6 Ball - Partner Left - 3 Trench");
     autonChooser.addOption("6 Ball - Partner Right - 3 Trench", "6 Ball - Partner Right - 3 Trench");
     autonChooser.addOption("3 Ball - Trench", "3 Ball - Trench");
+    autonChooser.addOption("3 Ball - Back Up", "3 Ball - Back Up");
+
   }
 
 
@@ -193,6 +197,7 @@ public class RobotContainer {
     final JoystickButton greenA = new JoystickButton(driverController, XboxController.Button.kA.value);
     final JoystickButton redB = new JoystickButton(driverController, XboxController.Button.kB.value);
     final JoystickButton blueX = new JoystickButton(driverController, XboxController.Button.kX.value);
+    final POVButton povUp = new POVButton(driverController, 0);
     
 
     final JoystickButton bumperRight = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
@@ -228,16 +233,16 @@ bumperRight.whenPressed(new runSerializer(serializer, Constants.SERIALIZERDRIVER
 bumperRight.whenReleased(new stopSerializer(serializer));
 
 
-/*
+
         // Slow rotates to the right
-        redB         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, -Constants.Swerve.SLOWROTATESPEED));
-        redB         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0));
+        redB         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, -Constants.Swerve.SLOWROTATESPEED, pigeon));
+        redB         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
         
         // Slow rotates to the left
-        blueX         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, Constants.Swerve.SLOWROTATESPEED));
-        blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0));
-*/
-        /////////povUp.whenPressed(new ResetGyro(Pigeon));
+        blueX         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, Constants.Swerve.SLOWROTATESPEED, pigeon));
+        blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
+
+        povUp.whenPressed(new ResetGyro(pigeon));
 
         back.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, true, pigeon));
         back.whenReleased(new ChangeVisionAngleOffset(operatorAngleAdjustment, false, pigeon));

@@ -89,6 +89,7 @@ public class Climber extends SubsystemBase {
       SmartDashboard.putNumber("Climber Current", climberMotor.getStatorCurrent());
     }
     SmartDashboard.putBoolean("Climber Activated", getClimberActivated());
+    SmartDashboard.putNumber("Climber Encoder Value", climberMotor.getSelectedSensorPosition());
   }
 
   /**

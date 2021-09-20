@@ -52,6 +52,8 @@ public final class Constants {
 
   // Robot-specific configuration for our swerve drive algorithm
   public static final class Swerve {
+    public final static double SLOWROTATESPEED = 0.05;
+
 
     public enum ModulePosition {
       FRONT_RIGHT(0),
