@@ -243,7 +243,7 @@ bumperRight.whenReleased(new stopSerializer(serializer));
         blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
 
         povUp.whenPressed(new ResetGyro(pigeon));
-
+        
         back.whenPressed(new ChangeVisionAngleOffset(operatorAngleAdjustment, true, pigeon));
         back.whenReleased(new ChangeVisionAngleOffset(operatorAngleAdjustment, false, pigeon));
 

@@ -42,6 +42,10 @@ public class SwerveDriveCommand2 extends CommandBase {
   /** Rotational P while rotating */
   private double movingP = 0.002; //0.007
 
+  private boolean stopRotating = false;
+  private double i = 0;
+  private double rotationLimiter = 0.15;
+
 
   /**
    * Command running the swerve calculations with the joystick
@@ -72,8 +76,14 @@ public class SwerveDriveCommand2 extends CommandBase {
     // Inverting X values because we want positive values when we pull to the left.
     // Xbox controllers return positive values when you pull to the right by default.
     double strafe = -driverController.getX(Hand.kLeft); 
+    double rotation = -driverController.getX(Hand.kRight); 
 
-    double rotation = -driverController.getX(Hand.kRight) * 0.34; 
+    //Limited rotation at slow speeds
+    if(strafe < rotationLimiter || forward < rotationLimiter) {
+      rotation = rotation * 0.2;
+    } else {
+      rotation = rotation * 0.34;
+    }
 
     // Inverting the bumper value because we want field-oriented drive by default.
     //boolean isFieldOriented = !driverController.getBumper(Hand.kLeft);    ////Original////
@@ -96,13 +106,27 @@ public class SwerveDriveCommand2 extends CommandBase {
 
     if (Math.abs(rotation) > rotationDeadband) {
       lastRotation = rotation;
+      stopRotating = false;
+      i = 0;
+
     } else {
       // Checks to see if we were rotating in the previous iteration, but are not currently rotating 
       if (Math.abs(lastRotation) > rotationDeadband && Math.abs(rotation) <= rotationDeadband) {
-        operatorAngleAdjustment.setOffsetAngle(pigeon.getYawMod());
-        rotation = 0;
-        lastRotation = rotation;
+        stopRotating = true;
+      } 
+      if(stopRotating == true) {
+        if(i == 3) {
+          operatorAngleAdjustment.setOffsetAngle(pigeon.getYawMod());
+          rotation = 0;
+          lastRotation = rotation;
+          i = 0;
+          stopRotating = false;
+        } else {
+          i++;
+        }
       }
+
+
       // Checks to see if the Driver's button is being pressed, and sets the current offset angle
       if (operatorAngleAdjustment.getIsChangingGyroAngle()) {
         operatorAngleAdjustment.setOffsetAngle(operatorAngleAdjustment.getFutureOffsetAngle());
