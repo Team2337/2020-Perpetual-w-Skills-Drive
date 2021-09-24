@@ -38,6 +38,8 @@ public class SwerveDrivetrain extends SubsystemBase {
   private FXSwerveModule[] modules;
 
   private boolean isFieldOriented;
+  private boolean joystickRotated = false;
+  private double strafeTwo, forwardTwo;
 
   /**
    * Should be in the same order as the swerve modules (see above)
@@ -118,7 +120,12 @@ public class SwerveDrivetrain extends SubsystemBase {
     if (forward == 0 && strafe == 0 && rotation == 0) {
       shouldUpdateAngle = false;
     }
-
+    if(joystickRotated) {
+      forwardTwo = strafe;
+      strafeTwo = forward;
+      strafe = strafeTwo;
+      forward = forwardTwo;
+    }
     double vxFeetPerSeccond = Constants.Swerve.MAX_FEET_PER_SECOND * forward;
     /**
      * For our joystick X axes - kinematics expects left to be a positive value,
@@ -267,6 +274,14 @@ public class SwerveDrivetrain extends SubsystemBase {
    */
   public void zeroAllDriveEncoders() {
     setAllModuleDriveEncoders(0);
+  }
+
+  public void setRotateJoystick(boolean rotated) {
+    joystickRotated = rotated;
+  }
+
+  public boolean getRotateJoystick() {
+    return joystickRotated;
   }
 
 

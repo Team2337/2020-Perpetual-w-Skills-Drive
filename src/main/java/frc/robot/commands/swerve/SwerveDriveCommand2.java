@@ -38,7 +38,7 @@ public class SwerveDriveCommand2 extends CommandBase {
   /** Deadband for the rotational input  */
   private double rotationDeadband = 0.1;
   /** Rotational P while not rotating */
-  private double stationaryP = 0.008;
+  private double stationaryP = 0.007;
   /** Rotational P while rotating */
   private double movingP = 0.002; //0.007
 

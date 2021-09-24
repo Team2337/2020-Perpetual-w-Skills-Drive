@@ -1,5 +1,6 @@
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -67,14 +68,13 @@ public class AutoStrafeWithPixy extends CommandBase {
     rotationError = (endAngleDegree - currentGyro);
     rotation = rotationError * rotationP;
     rotation = rotation > maxRotationSpeed ? maxRotationSpeed : rotation;
-    /*
+    
     if(vision.getPixyRightTarget()) {
-      strafe = -(Math.toRadians(vision.getPixyRightValue() - 2) * Constants.Auton.AUTOSTRAFEP);
+      strafe = (Math.toRadians(vision.getPixyRightValue() - 2) * Constants.Auton.AUTOSTRAFEP);
     } else {
       strafe = 0;
-    } */
-    strafe = 0;
-
+    } 
+    SmartDashboard.putNumber("pixy strafe", strafe);
    // Pass on joystick values to be calculated into angles and speeds
    SwerveDrivetrain.calculateJoystickInput(forward, strafe, rotation, true);
 
@@ -94,7 +94,7 @@ public class AutoStrafeWithPixy extends CommandBase {
   public boolean isFinished() {
     
     return (Math.abs(SwerveDrivetrain.getModulePosition(3)) > encoderDist * Constants.Swerve.TICKSPERINCH) 
-    ||( ((Math.abs(SwerveDrivetrain.getModulePosition(3)) > (encoderDist * Constants.Swerve.TICKSPERINCH) * 0.95)) 
-    && vision.getPixyRightTarget());
+    ||( ((Math.abs(SwerveDrivetrain.getModulePosition(3)) > (encoderDist * Constants.Swerve.TICKSPERINCH) * 0.95))); 
+    //&& vision.getPixyRightTarget());
   }
 }

@@ -79,7 +79,7 @@ public class RobotContainer {
   public final XboxController operatorControls = new XboxController(2);
 
   /* --- Subsystems --- */
-  public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
+  //public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
 
   public Pigeon pigeon = new Pigeon();
   public Intake intake = new Intake();
@@ -197,6 +197,7 @@ public class RobotContainer {
     final JoystickButton greenA = new JoystickButton(driverController, XboxController.Button.kA.value);
     final JoystickButton redB = new JoystickButton(driverController, XboxController.Button.kB.value);
     final JoystickButton blueX = new JoystickButton(driverController, XboxController.Button.kX.value);
+    final JoystickButton yellowY = new JoystickButton(driverController, XboxController.Button.kY.value);
     final POVButton povUp = new POVButton(driverController, 0);
     
 
@@ -241,6 +242,8 @@ bumperRight.whenReleased(new stopSerializer(serializer));
         // Slow rotates to the left
         blueX         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, Constants.Swerve.SLOWROTATESPEED, pigeon));
         blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
+
+        yellowY.whenPressed(new AutoStrafeWithPixy(swerveDrivetrain, 110, -0.25, 90, vision, operatorAngleAdjustment, pigeon));
 
         povUp.whenPressed(new ResetGyro(pigeon));
         

@@ -43,11 +43,11 @@ public class Robot extends TimedRobot {
     //serializer = new Serializer();
 
 
-
+    /*
     this.pixyCam = robotContainer.pixy;
     if(pixyCam.pixySeesTarget()) {
       pixyCam.printPath();
-    }
+    } */
 /*
     String mac = "xx:xx:xx:xx:xx:xx";
     // Attempt to get the MAC address of the robot

@@ -22,8 +22,8 @@ public class Vision extends SubsystemBase {
   private boolean visionDebug = false;
 
   public Vision() {
-   //pixyRightAnalog = new AnalogInput(4);
-   // pixyRightDigital = new DigitalInput(5);
+   pixyRightAnalog = new AnalogInput(4);
+    pixyRightDigital = new DigitalInput(5);
     //pixyLeftAnalog = new AnalogInput(5);
     //pixyLeftDigital = new DigitalInput(6);
   }
@@ -153,6 +153,6 @@ public class Vision extends SubsystemBase {
       SmartDashboard.putNumber("Pixy Left Analog Degrees", getPixyLeftValue());
       SmartDashboard.putBoolean("Pixy Left sees target", pixyLeftDigital.get()); 
     }
-    //SmartDashboard.putBoolean("Pixy Right sees target", pixyRightDigital.get());
+    SmartDashboard.putBoolean("Pixy Right sees target", pixyRightDigital.get());
    }
 }

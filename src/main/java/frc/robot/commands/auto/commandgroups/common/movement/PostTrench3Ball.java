@@ -68,8 +68,12 @@ public class PostTrench3Ball extends SequentialCommandGroup {
       new limelightPipeline(m_vision, 1),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, FourthDrive.driveDist, FourthDrive.forward, FourthDrive.strafe, FourthDrive.robotAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(FourthDrive.driveTimeout),
       new AutoRotateWithJoystickInput(m_swerveDrivetrain, FirstRotate.robotAngle, m_operatorAngleAdjustment, m_pigeon),
+       // new AutoRotateWithVision(m_swerveDrivetrain, 1, m_operatorAngleAdjustment, m_shooter, m_vision, m_pigeon).withTimeout(2.0),
+       // new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED)
+        new ParallelCommandGroup(
         new AutoRotateWithVision(m_swerveDrivetrain, 1, m_operatorAngleAdjustment, m_shooter, m_vision, m_pigeon).withTimeout(2.0),
         new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED)
+       )
     ); 
   }
 }
