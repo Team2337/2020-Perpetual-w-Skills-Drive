@@ -230,8 +230,11 @@ public class RobotContainer {
 bumperLeft.whenPressed(new ChangeGyroAngleOffset(operatorAngleAdjustment, true, vision, pigeon));
 bumperLeft.whenReleased(new ChangeGyroAngleOffset(operatorAngleAdjustment, false, vision, pigeon));
 
+/*
 bumperRight.whenPressed(new runSerializer(serializer, Constants.SERIALIZERDRIVERFORWARDSPEED));
 bumperRight.whenReleased(new stopSerializer(serializer));
+*/
+//Bumper right is being used in swervedrive command 2
 
 
 
@@ -286,12 +289,11 @@ final POVButton op_povDown = new POVButton(operatorController, 180);
 
 
 
-
+/*
 op_TriggerRight   .whenPressed(new runIntake(intake, Constants.INTAKEFORWARDSPEED));
 op_TriggerRight   .whenReleased(new stopIntake(intake));
+*/
 
-op_TriggerRight.whenPressed(new runAgitator(agitator, Constants.AGITATORSPEED));
-op_TriggerRight.whenReleased(new stopAgitator(agitator));
 
 
 
@@ -301,6 +303,8 @@ op_bumperRight    .whenReleased(new stopIntake(intake));
 
 op_bumperleft    .whenPressed(new runIntake(intake, Constants.INTAKEREVERSESPEED));
 op_bumperleft    .whenReleased(new stopIntake(intake));
+
+
 /*
 op_bumperleft.whenPressed(new feedSystemReverse(agitator, serializer));
 op_bumperleft.whenReleased(new feedSystemStop(agitator, serializer));
@@ -535,6 +539,10 @@ SmartDashboard.putData("DelayChooser", delayChooser);
 
   public boolean getOpTriggerLeft() {
     return (operatorController.getTriggerAxis(Hand.kRight)> .5) ;
+  }
+
+  public boolean getDrBumperRight() {
+    return (driverController.getBumper(Hand.kRight));
   }
 
 }

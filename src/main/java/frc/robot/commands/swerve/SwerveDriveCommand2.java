@@ -38,7 +38,7 @@ public class SwerveDriveCommand2 extends CommandBase {
   /** Deadband for the rotational input  */
   private double rotationDeadband = 0.1;
   /** Rotational P while not rotating */
-  private double stationaryP = 0.007;
+  private double stationaryP = 0.009;
   /** Rotational P while rotating */
   private double movingP = 0.002; //0.007
 
@@ -80,7 +80,11 @@ public class SwerveDriveCommand2 extends CommandBase {
 
     //Limited rotation at slow speeds
     if(strafe < rotationLimiter || forward < rotationLimiter) {
-      rotation = rotation * 0.2;
+      if(driverController.getBumper(Hand.kRight)) {
+        rotation = rotation * 0.34;
+      } else {
+        rotation = rotation * 0.2;
+      }
     } else {
       rotation = rotation * 0.34;
     }

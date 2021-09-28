@@ -43,6 +43,7 @@ public class ChangeGyroAngleOffset extends InstantCommand {
   public void initialize() {
     OperatorAngleAdjustment.setOffsetAngle(OperatorAngleAdjustment.getGyroAngleOffset());
     OperatorAngleAdjustment.setIsChangingGyroAngle(isRotating);
+    OperatorAngleAdjustment.setRotateJoystick();
     if (vision.getRotateLimelight() && isRotating) {
       vision.setLEDMode(3);
       OperatorAngleAdjustment.setLimelightRotationMode(true);

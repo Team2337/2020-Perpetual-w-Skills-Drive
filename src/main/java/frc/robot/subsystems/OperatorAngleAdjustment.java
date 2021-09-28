@@ -44,6 +44,8 @@ public class OperatorAngleAdjustment extends SubsystemBase {
   private SwerveDrivetrain swerveDrivetrain;
   private Vision vision;
 
+  public boolean futureJoystickRotated = false;
+
   /**
    * Class to change the robot's angle based on an offset. These offsets will be
    * queued on the operator's controller and then put into action on the driver's
@@ -108,6 +110,7 @@ public class OperatorAngleAdjustment extends SubsystemBase {
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFAR);
       vision.switchPipeLine(1);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "nearShot":
       futureOffsetAngle = nearShot;
@@ -116,23 +119,26 @@ public class OperatorAngleAdjustment extends SubsystemBase {
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
       vision.switchPipeLine(0);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "climbing":
       futureOffsetAngle = climbing;
       vision.switchPipeLine(2);
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(false); 
-      swerveDrivetrain.setRotateJoystick(true);
+      setFutureRotateJoystick(true);
       break;
     case "targetLimelightOn":
     vision.setRotateLimelight(true);
     swerveDrivetrain.setFieldOriented(true);
+    setFutureRotateJoystick(false);
       break;
     case "frontTrenchShot":
       futureOffsetAngle = frontTrenchShot;
       vision.switchPipeLine(1);
       shooter.setFutureSpeed(Constants.SHOOTFRONTTRENCHSPEED);
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFRONTTRENCH); 
+      setFutureRotateJoystick(false);
     case "frontTrenchRunShot":
       futureOffsetAngle = nearShot;
       shooter.setFutureSpeed(Constants.SHOOTSPEEDCLOSE);
@@ -140,33 +146,47 @@ public class OperatorAngleAdjustment extends SubsystemBase {
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDCLOSE);
       vision.switchPipeLine(1);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "0":
       futureOffsetAngle = field0;
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "90":
       futureOffsetAngle = field90;
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "180":
       futureOffsetAngle = field180;
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     case "270":
       futureOffsetAngle = field270;
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
       break;
     default:
       futureOffsetAngle = 0;
       vision.setRotateLimelight(false);
       swerveDrivetrain.setFieldOriented(true);
+      setFutureRotateJoystick(false);
 
     }
+  }
+
+  public void setFutureRotateJoystick(boolean rotated) {
+    futureJoystickRotated = rotated;
+  }
+
+  public void setRotateJoystick() {
+    swerveDrivetrain.setFutureRotateJoystick(futureJoystickRotated);
   }
 
   /**

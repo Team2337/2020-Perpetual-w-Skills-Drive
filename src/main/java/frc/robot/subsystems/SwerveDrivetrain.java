@@ -38,7 +38,7 @@ public class SwerveDrivetrain extends SubsystemBase {
   private FXSwerveModule[] modules;
 
   private boolean isFieldOriented;
-  private boolean joystickRotated = false;
+  private boolean futureJoystickRotated = false;
   private double strafeTwo, forwardTwo;
 
   /**
@@ -120,9 +120,10 @@ public class SwerveDrivetrain extends SubsystemBase {
     if (forward == 0 && strafe == 0 && rotation == 0) {
       shouldUpdateAngle = false;
     }
-    if(joystickRotated) {
+ 
+    if(futureJoystickRotated) {
       forwardTwo = strafe;
-      strafeTwo = forward;
+      strafeTwo = -forward;
       strafe = strafeTwo;
       forward = forwardTwo;
     }
@@ -276,13 +277,11 @@ public class SwerveDrivetrain extends SubsystemBase {
     setAllModuleDriveEncoders(0);
   }
 
-  public void setRotateJoystick(boolean rotated) {
-    joystickRotated = rotated;
+  public void setFutureRotateJoystick(boolean rotated) {
+    futureJoystickRotated = rotated;
   }
 
-  public boolean getRotateJoystick() {
-    return joystickRotated;
-  }
+ 
 
 
 }
