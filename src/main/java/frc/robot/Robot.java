@@ -40,14 +40,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     Utilities = new Utilities();
-    //serializer = new Serializer();
 
-
-    /*
-    this.pixyCam = robotContainer.pixy;
-    if(pixyCam.pixySeesTarget()) {
-      pixyCam.printPath();
-    } */
 /*
     String mac = "xx:xx:xx:xx:xx:xx";
     // Attempt to get the MAC address of the robot
@@ -145,6 +138,8 @@ public class Robot extends TimedRobot {
     Logger = true;
 
     robotContainer.resetDrivetrain();
+    robotContainer.vision.setLEDMode(1);
+    robotContainer.swerveDrivetrain.setFieldOriented(true);
   }
 
   /** This function is called periodically during operator control. */

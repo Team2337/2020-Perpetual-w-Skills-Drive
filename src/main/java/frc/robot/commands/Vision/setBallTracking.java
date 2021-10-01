@@ -37,6 +37,6 @@ public class setBallTracking extends InstantCommand {
 
     @Override
     public void initialize() {
-        //operatorAngleAdjustment.setBallTrackingEnabled(ballTrackingEnabled);
+        operatorAngleAdjustment.setBallTrackingEnabled(ballTrackingEnabled);
     }
 }

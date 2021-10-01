@@ -357,9 +357,9 @@ public static final int PCM1 = 1;
     public static double VISIONMIDDLEROTATIONP = 0.9; 
     public static double VISIONOFFROTATIONP = 0.65; 
     public static double VISIONFARROTATIONP = 0.85; 
-
-    public static double BALLTRACKINGP = 0.65;
 */
+    public static double BALLTRACKINGP = 0.80; //0.65
+
     public Constants() {
       //KICKERSPEEDCLOSE = 7000; 
       //KICKERSPEEDFAR = 5000; 

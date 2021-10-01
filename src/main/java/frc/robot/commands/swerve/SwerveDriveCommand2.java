@@ -175,6 +175,14 @@ public class SwerveDriveCommand2 extends CommandBase {
       }
     }
 
+    if(operatorAngleAdjustment.getBallTrackingEnabled()){
+      if(vision.pixyRightDigital.get()) {
+        rotation = -(Math.toRadians(vision.getPixyRightValue() - 2) * Constants.BALLTRACKINGP);
+      } else {
+        rotation = 0;
+      }
+    }
+
     // Pass on joystick values to be calculated into angles and speeds
     drivetrain.calculateJoystickInput(forward, strafe, rotation, isFieldOriented);
 

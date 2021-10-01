@@ -71,7 +71,7 @@ public class AutoDriveWithJoystickInput extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     operatorAngleAdjustment.setOffsetAngle(Robot.Utilities.getPigeonYawMod(pigeon));
-    //System.out.println("Encoder Ticks: " + SwerveDrivetrain.getModule(3).getDriveEncoderValue());
+    System.out.println("Encoder Ticks: " + swerveDrivetrain.getModulePosition(3));
     swerveDrivetrain.zeroAllDriveEncoders();
 
 

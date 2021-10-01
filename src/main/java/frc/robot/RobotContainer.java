@@ -33,6 +33,7 @@ import frc.robot.commands.Vision.limeLightLEDOff;
 import frc.robot.commands.Vision.limeLightLEDOn;
 import frc.robot.commands.Vision.setBallTracking;
 import frc.robot.commands.auto.AutoStrafeWithPixy;
+import frc.robot.commands.auto.commandgroups.CenterGoal8BallGenerator;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9Ball;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTrench;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTurn;
@@ -128,6 +129,7 @@ public class RobotContainer {
     autonChooser.addOption("6 Ball - Partner Right - 3 Trench", "6 Ball - Partner Right - 3 Trench");
     autonChooser.addOption("3 Ball - Trench", "3 Ball - Trench");
     autonChooser.addOption("3 Ball - Back Up", "3 Ball - Back Up");
+    autonChooser.addOption("8 Ball - Generator", "8 Ball - Generator");
 
   }
 
@@ -492,6 +494,9 @@ SmartDashboard.putData("DelayChooser", delayChooser);
         break;
       case "3 Ball - Back Up":
         autonomousCommand = new CenterGoal3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        break;
+      case "8 Ball - Generator":
+        autonomousCommand = new CenterGoal8BallGenerator(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       default:
         autonomousCommand = new WaitCommand(15).withTimeout(15);
