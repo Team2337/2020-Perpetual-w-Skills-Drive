@@ -33,7 +33,7 @@ import frc.robot.commands.Vision.limeLightLEDOff;
 import frc.robot.commands.Vision.limeLightLEDOn;
 import frc.robot.commands.Vision.setBallTracking;
 import frc.robot.commands.auto.AutoStrafeWithPixy;
-import frc.robot.commands.auto.commandgroups.CenterGoal8BallGenerator;
+import frc.robot.commands.auto.commandgroups.common.EightBall;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9Ball;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTrench;
 import frc.robot.commands.auto.commandgroups.nineball.CenterGoal9BallTurn;
@@ -496,7 +496,7 @@ SmartDashboard.putData("DelayChooser", delayChooser);
         autonomousCommand = new CenterGoal3Ball(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       case "8 Ball - Generator":
-        autonomousCommand = new CenterGoal8BallGenerator(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
+        autonomousCommand = new EightBall(delay, intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision);
         break;
       default:
         autonomousCommand = new WaitCommand(15).withTimeout(15);
