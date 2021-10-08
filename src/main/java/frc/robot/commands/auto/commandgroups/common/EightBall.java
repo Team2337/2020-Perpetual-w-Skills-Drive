@@ -16,7 +16,9 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.KickerWheel.*;
 import frc.robot.commands.Serializer.stopSerializer;
 import frc.robot.commands.auto.*;
+import frc.robot.commands.auto.commandgroups.common.movement.Generator2Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.Generator3Ball;
+import frc.robot.commands.auto.commandgroups.common.movement.InGenerator;
 import frc.robot.commands.auto.commandgroups.common.movement.InTrench3Ball;
 
 /**
@@ -52,14 +54,14 @@ public class EightBall extends SequentialCommandGroup {
     m_vision = vision;
 
     final class FirstDrive {
-      public static final double moduleAngle = 0, driveDist = 85, forward = -0.30, strafe = 0, driveTimeout = 7;
+      public static final double moduleAngle = 0, driveDist = 85, forward = -0.50, strafe = 0, driveTimeout = 7;
     }
     final class SecondDrive {
-      public static final double moduleAngle = 0, driveDist = 25, forward = 0.0, strafe = -0.3, driveTimeout = 7;
+      public static final double moduleAngle = 0, driveDist = 20, forward = 0.0, strafe = -0.5, driveTimeout = 7;
     }
 
     final class ThirdDrive {
-      public static final double driveDist = 75, forward = 0.3, strafe = 0.175;
+      public static final double driveDist = 60, forward = 0.5, strafe = 0.2916667;
     }
 
     addCommands(
@@ -71,7 +73,9 @@ public class EightBall extends SequentialCommandGroup {
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon),
       new zeroDriveEncoders(m_swerveDrivetrain),
-      new Generator3Ball(ThirdDrive.driveDist, ThirdDrive.strafe, ThirdDrive.forward, m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel, m_swerveDrivetrain, m_pigeon, m_vision)
+      new Generator3Ball(ThirdDrive.driveDist, ThirdDrive.strafe, ThirdDrive.forward, m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel, m_swerveDrivetrain, m_pigeon, m_vision).withTimeout(4),
+      new InGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
+      new Generator2Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision)
     );
   }
 }

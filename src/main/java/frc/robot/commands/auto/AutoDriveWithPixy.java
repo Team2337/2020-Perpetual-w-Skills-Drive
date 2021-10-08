@@ -94,6 +94,7 @@ public class AutoDriveWithPixy extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println("end end end end " + SwerveDrivetrain.getModulePosition(3));
     
     return (Math.abs(SwerveDrivetrain.getModulePosition(3)) > encoderDist * Constants.Swerve.TICKSPERINCH) 
     ||( ((Math.abs(SwerveDrivetrain.getModulePosition(3)) > (encoderDist * Constants.Swerve.TICKSPERINCH) * 0.95))); 
