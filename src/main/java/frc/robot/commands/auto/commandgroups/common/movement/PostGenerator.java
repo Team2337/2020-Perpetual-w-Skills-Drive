@@ -25,7 +25,7 @@ import frc.robot.commands.auto.*;
  * @author Madison J. 
  * @category AUTON 
  */
-public class Generator2Ball extends SequentialCommandGroup {
+public class PostGenerator extends SequentialCommandGroup {
   private final Agitator m_agitator;
   private final Intake m_intake;
   private final Serializer m_serializer;
@@ -41,7 +41,7 @@ public class Generator2Ball extends SequentialCommandGroup {
   /**
    * Drives from the initiation line to the generator command group
    */
-  public Generator2Ball(Intake intake, OperatorAngleAdjustment operatorAngleAdjustment, Agitator agitator, Serializer serializer, Shooter shooter, KickerWheel kickerWheel, SwerveDrivetrain swerveDrivetrain, Pigeon pigeon, Vision vision) {
+  public PostGenerator(Intake intake, OperatorAngleAdjustment operatorAngleAdjustment, Agitator agitator, Serializer serializer, Shooter shooter, KickerWheel kickerWheel, SwerveDrivetrain swerveDrivetrain, Pigeon pigeon, Vision vision) {
     m_operatorAngleAdjustment = operatorAngleAdjustment;
     m_agitator = agitator;
     m_intake = intake;
@@ -52,14 +52,17 @@ public class Generator2Ball extends SequentialCommandGroup {
     m_pigeon = pigeon;
     m_vision = vision;
 
-    final class SixthDrive {
-      public static final double driveDist = 12, forward = 0.3, strafe = -0.175, driveTimeout = 7, robotAngle = -64;
+    final class FirstRotate {
+      public static final double robotAngle = -14.22;
     }
 
     addCommands(
-      new AutoDriveWithJoystickInput(m_swerveDrivetrain, SixthDrive.driveDist, SixthDrive.forward, SixthDrive.strafe, SixthDrive.robotAngle, pigeon, operatorAngleAdjustment),
-      new resetDriveEncoders(m_swerveDrivetrain),
-      new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHAUTO).andThen(new runKicker(m_kickerWheel)))
-    );
+      new limeLightLEDOn(m_vision),
+      new limelightPipeline(m_vision, 1),
+      new AutoRotateWithJoystickInput(m_swerveDrivetrain, FirstRotate.robotAngle, m_operatorAngleAdjustment, m_pigeon),
+        new ParallelCommandGroup(
+        new AutoRotateWithVision(m_swerveDrivetrain, 1, m_operatorAngleAdjustment, m_shooter, m_vision, m_pigeon).withTimeout(2.0),
+        new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED)
+    ));
   }
 }

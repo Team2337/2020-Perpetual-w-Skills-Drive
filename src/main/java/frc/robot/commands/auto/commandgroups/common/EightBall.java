@@ -16,10 +16,12 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.KickerWheel.*;
 import frc.robot.commands.Serializer.stopSerializer;
 import frc.robot.commands.auto.*;
+import frc.robot.commands.auto.commandgroups.common.movement.Generator1Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.Generator2Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.Generator3Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.InGenerator;
 import frc.robot.commands.auto.commandgroups.common.movement.InTrench3Ball;
+import frc.robot.commands.auto.commandgroups.common.movement.PostGenerator;
 
 /**
  * Drives from the initiation line to the Trench to gather power cells
@@ -53,29 +55,37 @@ public class EightBall extends SequentialCommandGroup {
     m_pigeon = pigeon;
     m_vision = vision;
 
-    final class FirstDrive {
-      public static final double moduleAngle = 0, driveDist = 85, forward = -0.50, strafe = 0, driveTimeout = 7;
+    final class FirstDrivePartOne {
+      public static final double moduleAngle = 0, driveDist = 157, forward = -0.40, strafe = 0, driveTimeout = 7; //Drive distance was 85 at premier, changed at kettering
+    }
+    final class FirstDrivePartTwo {
+      public static final double moduleAngle = 0, driveDist = 3, forward = -0.40, strafe = 0, driveTimeout = 7; //Drive distance was 85 at premier, changed at kettering
     }
     final class SecondDrive {
-      public static final double moduleAngle = 0, driveDist = 20, forward = 0.0, strafe = -0.5, driveTimeout = 7;
+      public static final double moduleAngle = 0, driveDist = 10, forward = 0.0, strafe = -0.3, driveTimeout = 7;
     }
 
     final class ThirdDrive {
-      public static final double driveDist = 60, forward = 0.5, strafe = 0.2916667;
+      public static final double driveDist = 60, forward = 0.3, strafe = 0.175;
     }
 
     addCommands(
       new WaitCommand(delay).withTimeout(delay),
       new stopSerializer(m_serializer),
-      new AutoDriveWithJoystickInput(m_swerveDrivetrain, FirstDrive.driveDist, FirstDrive.forward, FirstDrive.strafe, FirstDrive.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(FirstDrive.driveTimeout),
+      new AutoDriveWithJoystickInput(m_swerveDrivetrain, FirstDrivePartOne.driveDist, FirstDrivePartOne.forward, FirstDrivePartOne.strafe, FirstDrivePartOne.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(FirstDrivePartOne.driveTimeout),
+      new zeroDriveEncoders(m_swerveDrivetrain),
+      new AutoDriveWithJoystickInput(m_swerveDrivetrain, FirstDrivePartTwo.driveDist, FirstDrivePartTwo.forward, FirstDrivePartTwo.strafe, FirstDrivePartTwo.moduleAngle, pigeon, operatorAngleAdjustment),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, SecondDrive.driveDist, SecondDrive.forward, SecondDrive.strafe, SecondDrive.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(SecondDrive.driveTimeout),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new Generator3Ball(ThirdDrive.driveDist, ThirdDrive.strafe, ThirdDrive.forward, m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel, m_swerveDrivetrain, m_pigeon, m_vision).withTimeout(4),
-      new InGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
-      new Generator2Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision)
+      new Generator1Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
+      //new InGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
+      //new Generator2Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
+      new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHAUTO).andThen(new runKicker(m_kickerWheel))),
+      new PostGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision)
     );
   }
 }

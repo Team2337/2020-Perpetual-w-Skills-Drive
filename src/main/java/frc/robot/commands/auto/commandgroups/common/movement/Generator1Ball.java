@@ -15,9 +15,6 @@ import frc.robot.commands.Agitator.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.KickerWheel.*;
 import frc.robot.commands.Serializer.runSerializer;
-import frc.robot.commands.Serializer.runSerializerComplex;
-import frc.robot.commands.Vision.limeLightLEDOn;
-import frc.robot.commands.Vision.limelightPipeline;
 import frc.robot.commands.auto.*;
 
 /**
@@ -25,7 +22,7 @@ import frc.robot.commands.auto.*;
  * @author Madison J. 
  * @category AUTON 
  */
-public class Generator2Ball extends SequentialCommandGroup {
+public class Generator1Ball extends SequentialCommandGroup {
   private final Agitator m_agitator;
   private final Intake m_intake;
   private final Serializer m_serializer;
@@ -41,7 +38,7 @@ public class Generator2Ball extends SequentialCommandGroup {
   /**
    * Drives from the initiation line to the generator command group
    */
-  public Generator2Ball(Intake intake, OperatorAngleAdjustment operatorAngleAdjustment, Agitator agitator, Serializer serializer, Shooter shooter, KickerWheel kickerWheel, SwerveDrivetrain swerveDrivetrain, Pigeon pigeon, Vision vision) {
+  public Generator1Ball(Intake intake, OperatorAngleAdjustment operatorAngleAdjustment, Agitator agitator, Serializer serializer, Shooter shooter, KickerWheel kickerWheel, SwerveDrivetrain swerveDrivetrain, Pigeon pigeon, Vision vision) {
     m_operatorAngleAdjustment = operatorAngleAdjustment;
     m_agitator = agitator;
     m_intake = intake;
@@ -52,14 +49,22 @@ public class Generator2Ball extends SequentialCommandGroup {
     m_pigeon = pigeon;
     m_vision = vision;
 
-    final class SixthDrive {
-      public static final double driveDist = 12, forward = 0.3, strafe = -0.175, driveTimeout = 7, robotAngle = -64;
+    final class FourthDrive {
+      public static final double driveDist = 12, forward = 0, strafe = -0.3, robotAngle = 5;
+    }
+
+    final class FirstRotate {
+      public static final double robotAngle = 0;
     }
 
     addCommands(
-      new AutoDriveWithJoystickInput(m_swerveDrivetrain, SixthDrive.driveDist, SixthDrive.forward, SixthDrive.strafe, SixthDrive.robotAngle, pigeon, operatorAngleAdjustment),
-      new resetDriveEncoders(m_swerveDrivetrain),
-      new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHAUTO).andThen(new runKicker(m_kickerWheel)))
+      new AutoRotateWithJoystickInput(m_swerveDrivetrain, FirstRotate.robotAngle, operatorAngleAdjustment, pigeon),
+      new ParallelCommandGroup(
+        new runIntake(m_intake, Constants.INTAKEFORWARDSPEED),
+        new runAgitator(m_agitator, Constants.AGITATORSPEED),
+        new AutoDriveWithJoystickInput(m_swerveDrivetrain, FourthDrive.driveDist, FourthDrive.forward, FourthDrive.strafe, FourthDrive.robotAngle, pigeon, operatorAngleAdjustment)
+      )
+
     );
   }
 }

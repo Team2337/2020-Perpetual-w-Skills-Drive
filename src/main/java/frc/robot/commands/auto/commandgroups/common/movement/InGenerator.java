@@ -50,15 +50,11 @@ public class InGenerator extends SequentialCommandGroup {
     m_vision = vision;
 
     final class FourthDrive {
-      public static final double driveDist = 55, forward = -0.3, strafe = 0.08, robotAngle = -64;
+      public static final double driveDist = 50, forward = -0.3, strafe = 0.08, robotAngle = -64;
     }
 
     final class FifthDrive {
-      public static final double driveDist = 17, forward = 0.0, strafe = -0.3, driveTimeout = 7, robotAngle = -64;
-    }
-
-    final class SixthDrive {
-      public static final double driveDist = 35, forward = 0.3, strafe = -0.175, driveTimeout = 7, robotAngle = -64;
+      public static final double driveDist = 12, forward = 0.0, strafe = -0.3, driveTimeout = 7, robotAngle = -64;
     }
 
     addCommands(
@@ -67,9 +63,7 @@ public class InGenerator extends SequentialCommandGroup {
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, FourthDrive.driveDist, FourthDrive.forward, FourthDrive.strafe, FourthDrive.robotAngle, pigeon, operatorAngleAdjustment),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, FifthDrive.driveDist, FifthDrive.forward, FifthDrive.strafe, FifthDrive.robotAngle, pigeon, operatorAngleAdjustment),
-      new zeroDriveEncoders(m_swerveDrivetrain),
-      new runSerializer(m_serializer, Constants.SERIALIZERDRIVERFORWARDSPEED),
-      new AutoDriveWithJoystickInput(m_swerveDrivetrain, SixthDrive.driveDist, SixthDrive.forward, SixthDrive.strafe, SixthDrive.robotAngle, pigeon, operatorAngleAdjustment)
+      new zeroDriveEncoders(m_swerveDrivetrain)
     );
   }
 }
