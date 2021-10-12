@@ -53,6 +53,10 @@ import frc.robot.commands.swerve.ResetGyro;
 import frc.robot.commands.swerve.SetGyroAngleOffset;
 import frc.robot.commands.swerve.SwerveDriveCommand2;
 import frc.robot.commands.swerve.setSlowRotateMode;
+import frc.robot.commands.swerve.slowRotateLeft;
+import frc.robot.commands.swerve.slowRotateRight;
+import frc.robot.commands.swerve.slowStrafeLeft;
+import frc.robot.commands.swerve.slowStrafeRight;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -241,12 +245,14 @@ bumperRight.whenReleased(new stopSerializer(serializer));
 
 
         // Slow rotates to the right
-        redB         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, -Constants.Swerve.SLOWROTATESPEED, pigeon));
-        redB         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
+        redB         .whenPressed(new slowRotateRight(swerveDrivetrain, operatorAngleAdjustment, pigeon));
+        //redB         .whenPressed(new slowStrafeRight(swerveDrivetrain, operatorAngleAdjustment, pigeon));
+
         
         // Slow rotates to the left
-        blueX         .whenPressed(new setSlowRotateMode(operatorAngleAdjustment, true, Constants.Swerve.SLOWROTATESPEED, pigeon));
-        blueX         .whenReleased(new setSlowRotateMode(operatorAngleAdjustment, false, 0, pigeon));
+        blueX         .whenPressed(new slowRotateLeft(swerveDrivetrain, operatorAngleAdjustment, pigeon));
+        //blueX         .whenPressed(new slowStrafeLeft(swerveDrivetrain, operatorAngleAdjustment, pigeon));
+
 
         yellowY.whenPressed(new AutoStrafeWithPixy(swerveDrivetrain, 110, -0.25, 90, vision, operatorAngleAdjustment, pigeon));
 

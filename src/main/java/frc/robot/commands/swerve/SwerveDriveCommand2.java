@@ -83,7 +83,8 @@ public class SwerveDriveCommand2 extends CommandBase {
       if(driverController.getBumper(Hand.kRight)) {
         rotation = rotation * 0.34;
       } else {
-        rotation = rotation * 0.2;
+        //rotation = rotation * 0.2;
+        rotation = Math.copySign((((Math.abs(rotation)-0.1)/0.9)*0.1)+0.1, rotation);
       }
     } else {
       rotation = rotation * 0.34;
