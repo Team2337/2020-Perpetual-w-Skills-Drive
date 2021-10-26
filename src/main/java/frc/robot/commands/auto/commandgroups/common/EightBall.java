@@ -56,17 +56,17 @@ public class EightBall extends SequentialCommandGroup {
     m_vision = vision;
 
     final class FirstDrivePartOne {
-      public static final double moduleAngle = 0, driveDist = 157, forward = -0.40, strafe = 0, driveTimeout = 7; //Drive distance was 85 at premier, changed at kettering
+      public static final double moduleAngle = 0, driveDist = 85, forward = -0.50, strafe = 0, driveTimeout = 7; //Drive distance was 157 at kettering, changed back at premier
     }
     final class FirstDrivePartTwo {
-      public static final double moduleAngle = 0, driveDist = 3, forward = -0.40, strafe = 0, driveTimeout = 7; //Drive distance was 85 at premier, changed at kettering
+      public static final double moduleAngle = 0, driveDist = 3, forward = -0.40, strafe = 0, driveTimeout = 7; 
     }
     final class SecondDrive {
-      public static final double moduleAngle = 0, driveDist = 10, forward = 0.0, strafe = -0.3, driveTimeout = 7;
+      public static final double moduleAngle = 0, driveDist = 10, forward = 0.0, strafe = -0.4, driveTimeout = 7;
     }
 
     final class ThirdDrive {
-      public static final double driveDist = 60, forward = 0.3, strafe = 0.175;
+      public static final double driveDist = 60, forward = 0.4, strafe = 0.2333;
     }
 
     addCommands(
@@ -78,12 +78,10 @@ public class EightBall extends SequentialCommandGroup {
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, SecondDrive.driveDist, SecondDrive.forward, SecondDrive.strafe, SecondDrive.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(SecondDrive.driveTimeout),
       new zeroDriveEncoders(m_swerveDrivetrain),
-      new AutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon),
+      new SlowAutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon).withTimeout(1),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new Generator3Ball(ThirdDrive.driveDist, ThirdDrive.strafe, ThirdDrive.forward, m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel, m_swerveDrivetrain, m_pigeon, m_vision).withTimeout(4),
       new Generator1Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
-      //new InGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
-      //new Generator2Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),
       new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHAUTO).andThen(new runKicker(m_kickerWheel))),
       new PostGenerator(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision)
     );

@@ -50,7 +50,7 @@ public class Generator1Ball extends SequentialCommandGroup {
     m_vision = vision;
 
     final class FourthDrive {
-      public static final double driveDist = 12, forward = 0, strafe = -0.3, robotAngle = 5;
+      public static final double driveDist = 12, forward = 0, strafe = -0.4, robotAngle = 5;
     }
 
     final class FirstRotate {

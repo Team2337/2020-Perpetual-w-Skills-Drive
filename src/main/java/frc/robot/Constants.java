@@ -263,6 +263,7 @@ public static final int PCM1 = 1;
     
    /* --- Intake --- */
    public static double INTAKEFORWARDSPEED = 0.5;
+   public static double FASTINTAKEFORWARDSPEED = 0.7;
    public static double INTAKEREVERSESPEED = -0.4;
 
    //Whether or not to detect jams for the agitator

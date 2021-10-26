@@ -54,10 +54,12 @@ public class Generator3Ball extends ParallelCommandGroup {
     }
 
     addCommands(
-      new runIntake(m_intake, Constants.INTAKEFORWARDSPEED),
+      new runIntake(m_intake, Constants.FASTINTAKEFORWARDSPEED),
       new runAgitator(m_agitator, Constants.AGITATORSPEED),
+      new ParallelRaceGroup(
+      new runSerializerToSecondSensor(m_serializer, Constants.SERIALIZEROPERATORFORWARDSPEED),
       new AutoDriveWithPixy(m_swerveDrivetrain, driveDistance, strafeSpeed, forwardSpeed, ThirdDrive.robotAngle, vision, operatorAngleAdjustment, pigeon)
-      //new WaitCommand(1).andThen(new autoStartShooter(m_shooter, Constants.SHOOTFRONTTRENCHSPEED).andThen(new runKicker(m_kickerWheel)))
+      )
     );
   }
 }
