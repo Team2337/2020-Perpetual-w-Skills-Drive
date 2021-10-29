@@ -58,12 +58,14 @@ public class Generator1Ball extends SequentialCommandGroup {
     }
 
     addCommands(
-      new AutoRotateWithJoystickInput(m_swerveDrivetrain, FirstRotate.robotAngle, operatorAngleAdjustment, pigeon),
-      new ParallelCommandGroup(
-        new runIntake(m_intake, Constants.INTAKEFORWARDSPEED),
-        new runAgitator(m_agitator, Constants.AGITATORSPEED),
-        new AutoDriveWithJoystickInput(m_swerveDrivetrain, FourthDrive.driveDist, FourthDrive.forward, FourthDrive.strafe, FourthDrive.robotAngle, pigeon, operatorAngleAdjustment)
-      )
+      new AutoRotateWithJoystickInput(m_swerveDrivetrain, FirstRotate.robotAngle, operatorAngleAdjustment, pigeon).withTimeout(1),
+      new zeroDriveEncoders(m_swerveDrivetrain),
+      //new ParallelCommandGroup(
+        //new runIntake(m_intake, Constants.INTAKEFORWARDSPEED),
+        //new runAgitator(m_agitator, Constants.AGITATORSPEED),
+        new AutoDriveWithJoystickInput(m_swerveDrivetrain, FourthDrive.driveDist, FourthDrive.forward, FourthDrive.strafe, FourthDrive.robotAngle, pigeon, operatorAngleAdjustment),
+        new zeroDriveEncoders(m_swerveDrivetrain)
+     // )
 
     );
   }

@@ -22,6 +22,7 @@ import frc.robot.commands.auto.commandgroups.common.movement.Generator3Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.InGenerator;
 import frc.robot.commands.auto.commandgroups.common.movement.InTrench3Ball;
 import frc.robot.commands.auto.commandgroups.common.movement.PostGenerator;
+import frc.robot.commands.auto.commandgroups.common.systemactions.FirePreloads;
 
 /**
  * Drives from the initiation line to the Trench to gather power cells
@@ -71,14 +72,16 @@ public class EightBall extends SequentialCommandGroup {
 
     addCommands(
       new WaitCommand(delay).withTimeout(delay),
+      new FirePreloads(m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel).withTimeout(2.75),
       new stopSerializer(m_serializer),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, FirstDrivePartOne.driveDist, FirstDrivePartOne.forward, FirstDrivePartOne.strafe, FirstDrivePartOne.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(FirstDrivePartOne.driveTimeout),
+      new zeroDriveEncoders(m_swerveDrivetrain),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, FirstDrivePartTwo.driveDist, FirstDrivePartTwo.forward, FirstDrivePartTwo.strafe, FirstDrivePartTwo.moduleAngle, pigeon, operatorAngleAdjustment),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new AutoDriveWithJoystickInput(m_swerveDrivetrain, SecondDrive.driveDist, SecondDrive.forward, SecondDrive.strafe, SecondDrive.moduleAngle, m_pigeon, m_operatorAngleAdjustment).withTimeout(SecondDrive.driveTimeout),
       new zeroDriveEncoders(m_swerveDrivetrain),
-      new SlowAutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon).withTimeout(1),
+      new SlowAutoRotateWithJoystickInput(m_swerveDrivetrain, -64, m_operatorAngleAdjustment, m_pigeon).withTimeout(0.7),
       new zeroDriveEncoders(m_swerveDrivetrain),
       new Generator3Ball(ThirdDrive.driveDist, ThirdDrive.strafe, ThirdDrive.forward, m_intake, m_operatorAngleAdjustment, m_agitator, m_serializer, m_shooter, m_kickerWheel, m_swerveDrivetrain, m_pigeon, m_vision).withTimeout(4),
       new Generator1Ball(intake, operatorAngleAdjustment, agitator, serializer, shooter, kickerWheel, swerveDrivetrain, pigeon, vision),

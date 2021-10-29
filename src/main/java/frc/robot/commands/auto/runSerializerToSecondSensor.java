@@ -33,6 +33,14 @@ public class runSerializerToSecondSensor extends CommandBase {
     subsystem.setSerializerSpeed(serializerSpeed);
   }
 
+  public void execute() {
+    if(subsystem.middleSerializerSensor.get()) {
+      subsystem.setSerializerSpeed(0);
+    } else {
+      subsystem.setSerializerSpeed(serializerSpeed);
+    }
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
