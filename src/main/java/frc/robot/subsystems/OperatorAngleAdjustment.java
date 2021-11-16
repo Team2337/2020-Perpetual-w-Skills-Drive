@@ -105,7 +105,6 @@ public class OperatorAngleAdjustment extends SubsystemBase {
     case "farShot":
       futureOffsetAngle = farShot;
       shooter.setFutureSpeed(Constants.SHOOTSPEEDFAR);
-      
       vision.setRotateLimelight(false);
       kickerWheel.setFutureSpeed(Constants.KICKERSPEEDFAR);
       vision.switchPipeLine(1);

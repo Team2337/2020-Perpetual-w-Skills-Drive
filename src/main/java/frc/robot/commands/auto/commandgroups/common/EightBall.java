@@ -57,13 +57,13 @@ public class EightBall extends SequentialCommandGroup {
     m_vision = vision;
 
     final class FirstDrivePartOne {
-      public static final double moduleAngle = 0, driveDist = 85, forward = -0.50, strafe = 0, driveTimeout = 7; //Drive distance was 157 at kettering, changed back at premier
+      public static final double moduleAngle = 0, driveDist = 157, forward = -0.50, strafe = 0, driveTimeout = 7; //Drive distance was 85 at premier, changed at girls comp
     }
     final class FirstDrivePartTwo {
       public static final double moduleAngle = 0, driveDist = 3, forward = -0.40, strafe = 0, driveTimeout = 7; 
     }
     final class SecondDrive {
-      public static final double moduleAngle = 0, driveDist = 10, forward = 0.0, strafe = -0.4, driveTimeout = 7;
+      public static final double moduleAngle = 0, driveDist = 8, forward = 0.0, strafe = -0.4, driveTimeout = 7;
     }
 
     final class ThirdDrive {

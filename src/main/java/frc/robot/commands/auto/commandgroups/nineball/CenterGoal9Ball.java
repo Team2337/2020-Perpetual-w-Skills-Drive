@@ -60,7 +60,7 @@ public class CenterGoal9Ball extends SequentialCommandGroup {
       
     addCommands(
       new runIntake(intake, Constants.INTAKEFORWARDSPEED),
-      new WaitCommand(2).withTimeout(2),
+      new WaitCommand(1).withTimeout(1),
       new FirePartnerBalls(2, m_intake, m_agitator, m_serializer, m_operatorAngleAdjustment, m_shooter, m_kickerWheel),
       new zeroDriveEncoders(swerveDrivetrain).withTimeout(0.04),
       new AutoDriveWithJoystickInput(swerveDrivetrain, FirstDrive.driveDist, FirstDrive.forward, FirstDrive.strafe, FirstDrive.moduleAngle, pigeon, operatorAngleAdjustment).withTimeout(FirstDrive.driveTimeout)

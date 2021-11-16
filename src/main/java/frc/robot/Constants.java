@@ -303,7 +303,7 @@ public static final int PCM1 = 1;
     /** Speed to shoot at from ~34 feet away */
     public static int SHOOTSPEEDFAR = 15400; 
 
-    public static int SHOOTFRONTTRENCHSPEED = 13750;
+    public static int SHOOTFRONTTRENCHSPEED = 13500; //13750
 
     public static int SHOOTFRONTTRENCHAUTO = 13300;
 
